@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+	<title>Glassy keys</title>
+
+	<link rel='icon' href='data:,'>
+	<link rel='stylesheet' href='/global.css'>
+
+	<script defer type="module" src='/build/bundle.js'></script>
+</head>
+
+<style>
+	body {
+		padding: 0;
+
+		/* glassy variant 1 */
+		background-attachment: fixed;
+	}
+	main {
+		width: 100%;
+		background-image: url("lenna.png");
+		background-size: cover;
+		height: 10em;
+		padding: 0.01em 1em;
+		color: lightgray;
+		border: 0;
+	}
+
+	/*
+	* Styling the web component using '::part' - for the parts it allows access to.
+  */
+	aside-keys::part(frame) {
+		background: rgba(255, 255, 255, 0.3);		/* semi-transparent background */
+		backdrop-filter: blur(1em);
+
+		border-radius: 1em;
+		fill: red;
+	}
+
+	/* Fallback (Firefox)
+	*/
+	@supports not (backdrop-filter: none) {
+		aside-keys::part(frame) {
+	    background: rgba(255, 255, 255, 0.9);		/* more opaque */
+	  }
+	}
+</style>
+
+<body>
+	<main>
+	  <h1>ABC</h1>
+		<div>blah blah</div>
+	</main>
+
+	<aside-keys options="google">
+		<h1>Hello - please log in!</h1>
+	</aside-keys>
+</body>
+</html>
