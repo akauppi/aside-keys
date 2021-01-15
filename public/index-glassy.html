@@ -31,18 +31,27 @@
 
 	/*
 	* Styling the web component using '::part' - for the parts it allows access to.
+	*
+	* Safari compatibility note:
+	*			caniuse.com reports Safari "supported with prefix '-webkit-'" (versions 9..14) so let's use that
+	*			alongside the prefixless -> https://caniuse.com/css-backdrop-filter
   */
 	aside-keys::part(frame) {
 		background: rgba(255, 255, 255, 0.3);		/* semi-transparent background */
 		backdrop-filter: blur(1em);
+		-webkit-backdrop-filter: blur(1em);
 
-		border-radius: 1em;
-		fill: red;
+		/* enable to get a thin border
+		border-left: 1px solid rgba(190,190,190,0.6);
+		border-bottom: 1px solid rgba(190,190,190,0.6);
+		*/
+		border-radius: 1em 0 0 1em;
+		box-shadow: 6px 6px 3px rgba(0, 0, 0, 0.2);
+
+		margin-top: 10px;
 	}
 
-	/* Fallback (Firefox)
-	*/
-	@supports not (backdrop-filter: none) {
+	@supports not ((backdrop-filter: blur(0)) or (-webkit-backdrop-filter: blur(0))) {
 		aside-keys::part(frame) {
 	    background: rgba(255, 255, 255, 0.9);		/* more opaque */
 	  }
