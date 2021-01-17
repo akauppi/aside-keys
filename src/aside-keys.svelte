@@ -1,30 +1,42 @@
 <svelte:options tag="aside-keys" />
 
 <script>
-	import { onMount } from 'svelte'
-	import { slideFixed } from './tools/slideFixed'
+	import {onMount, tick} from 'svelte'
+	import {slideFixed} from './tools/slideFixed'
 
 	// tbd. Allow the tag to give 'easing=...' as strings :)   ..or custom CSS field??
-	import { backOut } from 'svelte/easing'
+	import {backOut} from 'svelte/easing'
+	import "./OneTap.svelte";
 
-	const validOpts = new Set(["google"])
+	/*** nah?
+	const validProviders = new Set([
+		"onetap",		// Google One Tap for Web
+	])
 
-	/*** not yet
 	//PROPS
-	export let options;		// string from following: "google", ... with white space in between
+	export let providers = "onetap";		// eg. "abc def"
 	// /PROPS
 
-	const optionsSet = new Set(options.split(' '));		// [ "google", ... ]
-	if (optionsSet.size === 0) {
-		throw new Error(`No 'options' provided. Please provided at least one of: ${ validOpts.join(', ') }`)
+	const providersSet = new Set(providers.split(' '));		// [ "google", ... ]
+	if (providersSet.size === 0) {
+		throw new Error(`No 'providers' provided. Please provide at least one of: ${validProviders.join(', ')}`)
 	}
 
-	const bads = [...optionsSet].filter( v => !validOpts.has(v) )
+	const bad = [...providersSet].filter(v => !validProviders.has(v))
 
-	if (bads.length > 0) {
-		throw new Error(`Unexpected option(s): ${ bads.join(', ') }`)
+	if (bad.length > 0) {
+		throw new Error(`Unexpected 'providers': ${bad.join(', ')}`)
 	}
 	***/
+
+	/* SVELTE NOTE:
+	*		It seems mapping 'a-b' (attribute) to 'aB' (property) would be on the radar. Follow -> https://github.com/sveltejs/svelte/issues/3852
+	*
+	* 	Note that the use of '$$props' takes away warnings about unrelated misuse of attributes (we'd like the warnings).
+  */
+	//let onetapClient;		// e.g. "1016...-...1a3lt.apps.googleusercontent.com"
+	const onetapClient = $$props['onetap-client'];		// until Svelte does the conversion		(did not work for passing the value to 'OneTap')
+	//let onetapClient;
 
 	let visible;		// changing this activates the 'slideFixed' animation
 
@@ -36,8 +48,16 @@
 		visible = false;
 	}
 
-	onMount( () => {
+	onMount(_ => {
 		show()		// slide the login
+
+		console.log("!!!", { onetapClient })
+		/***
+		const x = $$props['onetap-client']
+		await tick();		// to counteract bug -> https://github.com/sveltejs/svelte/issues/2227
+
+		onetapClient = x
+		***/
 	})
 
 </script>
@@ -45,6 +65,9 @@
 {#if visible}
 	<aside part="frame" transition:slideFixed={{ duration: 600, easing: backOut }} >
 		<slot />
+		{#if onetapClient}
+			<private-onetap client={ onetapClient } />
+		{/if}
 		<button on:click={ vanish }>Vanish me!</button>
 	</aside>
 {/if}

@@ -2,7 +2,7 @@ import svelte from 'rollup-plugin-svelte';
 //import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
-//import { terser } from 'rollup-plugin-terser';
+import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 
 const production = !process.env.ROLLUP_WATCH;
@@ -48,20 +48,12 @@ export default {
 	plugins: [
 		svelte({
 			compilerOptions: {
-				// enable run-time checks when not in production
-				dev: !production,
+				dev: !production,		// runtime checks
 				customElement: true,
 			}
 		}),
-		// we'll extract any component CSS out into
-		// a separate file - better for performance
-		css( /*{ output: 'bundle.css' }*/ ),
+		//css(),
 
-		// If you have external dependencies installed from
-		// npm, you'll most likely need these plugins. In
-		// some cases you'll need additional configuration -
-		// consult the documentation for details:
-		// https://github.com/rollup/plugins/tree/master/packages/commonjs
 		resolve({
 			modulesOnly: true,
 			//browser: true,		// keep disabled
@@ -69,17 +61,11 @@ export default {
 		}),
 		//commonjs(),
 
-		// In dev mode, call `npm run start` once
-		// the bundle has been generated
-		!production && serve(),
-
-		// Watch the `public` directory and refresh the
-		// browser on changes when not in production
+		!production && serve(),		// serve 'public'
 		!production && livereload('public'),
 
-		// If we're building for production (npm run build
-		// instead of npm run dev), minify
-		//production && terser()
+		// If building for production ('npm run build'), minify
+		production && terser()
 	],
 	watch: {
 		clearScreen: false
