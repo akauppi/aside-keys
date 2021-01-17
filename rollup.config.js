@@ -7,7 +7,16 @@ import css from 'rollup-plugin-css-only';
 
 const production = !process.env.ROLLUP_WATCH;
 
+/*
+* With this, 'npm run dev' serves the files while 'rollup -c -w' watches for changes and recompiles. The other option
+* would be to use eg. 'concurrently' and 'wait-on' npm modules that are now not needed.
+*
+* Note: Different to Svelte template's code, the command has been lifted upper from the midst of code, and we call
+* 		'sirv' directly (instead of 'npm run start --dev'). This causes slight duplication but also keeps 'dev' separate
+* 		from other npm targets (and is simpler).
+*/
 function serve() {
+	const cmd = "sirv --host 0.0.0.0 public --dev --no-clear".split(' ')
 	let server;
 
 	function toExit() {
@@ -17,7 +26,7 @@ function serve() {
 	return {
 		writeBundle() {
 			if (server) return;
-			server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+			server = require('child_process').spawn(cmd[0], cmd.slice(1), {
 				stdio: ['ignore', 'inherit', 'inherit'],
 				shell: true
 			});
