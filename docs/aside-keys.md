@@ -46,3 +46,17 @@ Login providers. Available choices:
 
 >tbd. callbacks etc.
 
+## Theming
+
+You control the visual presentation of the frame completely in your application side CSS, using `::part(frame)`.
+
+For example:
+
+```
+aside-keys::part(frame) {
+  background: red;
+  margin-top: 10px;
+}
+```
+
+The component does not guarantee any meaningful defaults - styling is in your hands. :)

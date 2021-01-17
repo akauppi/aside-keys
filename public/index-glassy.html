@@ -30,11 +30,10 @@
 	}
 
 	/*
-	* Styling the web component using '::part' - for the parts it allows access to.
+	* Styling the web component using '::part'.
 	*
-	* Safari compatibility note:
-	*			caniuse.com reports Safari "supported with prefix '-webkit-'" (versions 9..14) so let's use that
-	*			alongside the prefixless -> https://caniuse.com/css-backdrop-filter
+	* Safari note:
+	*	  'backdrop-filter' is supported with prefix (versions 9..14) -> https://caniuse.com/css-backdrop-filter
   */
 	aside-keys::part(frame) {
 		background: rgba(255, 255, 255, 0.3);		/* semi-transparent background */
@@ -64,7 +63,9 @@
 		<div>blah blah</div>
 	</main>
 
-	<aside-keys options="google">
+	<aside-keys order="google"
+		google-web-client="1016045831598-v2er2pcoc9h04eo8ltjdenp88081a3lt.apps.googleusercontent.com"
+	>
 		<h1>Hello - please log in!</h1>
 	</aside-keys>
 </body>

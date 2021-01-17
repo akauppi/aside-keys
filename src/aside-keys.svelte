@@ -9,6 +9,7 @@
 
 	const validOpts = new Set(["google"])
 
+	/*** not yet
 	//PROPS
 	export let options;		// string from following: "google", ... with white space in between
 	// /PROPS
@@ -23,6 +24,7 @@
 	if (bads.length > 0) {
 		throw new Error(`Unexpected option(s): ${ bads.join(', ') }`)
 	}
+	***/
 
 	let visible;		// changing this activates the 'slideFixed' animation
 
