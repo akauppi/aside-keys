@@ -1,5 +1,9 @@
 # Changelog
 
+## 18-Jan-2020
+
+- Able to build a web component with Svelte subcomponent(s)
+
 ## 15-Jan-2020
 
 - Glassy and movement works on:

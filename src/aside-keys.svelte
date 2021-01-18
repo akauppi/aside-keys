@@ -6,7 +6,7 @@
 
 	// tbd. Allow the tag to give 'easing=...' as strings :)   ..or custom CSS field??
 	import {backOut} from 'svelte/easing'
-	import "./OneTap.svelte";
+	import OneTap from "./OneTap.svelte";
 
 	/*** nah?
 	const validProviders = new Set([
@@ -33,10 +33,17 @@
 	*		It seems mapping 'a-b' (attribute) to 'aB' (property) would be on the radar. Follow -> https://github.com/sveltejs/svelte/issues/3852
 	*
 	* 	Note that the use of '$$props' takes away warnings about unrelated misuse of attributes (we'd like the warnings).
+	*
+	* ANOTHER SVELTE NOTE: ‼️❗️️️
+	* 	Getting *any* prop with just 'let abc' within a web component does not seem to work. '$$props' does. (Svelte 3.31.2)
   */
 	//let onetapClient;		// e.g. "1016...-...1a3lt.apps.googleusercontent.com"
-	const onetapClient = $$props['onetap-client'];		// until Svelte does the conversion		(did not work for passing the value to 'OneTap')
-	//let onetapClient;
+	const onetapClient = $$props['onetap-client'];		// works; until Svelte does the conversion
+
+	let aaa;											// does NOT work!
+	const aaa2 = $$props["aaa"];	// works
+
+	console.log("!!!1", { onetapClient, aaa, aaa2 })		// { "...", undefined, "aaa" }
 
 	let visible;		// changing this activates the 'slideFixed' animation
 
@@ -48,16 +55,13 @@
 		visible = false;
 	}
 
-	onMount(_ => {
+	onMount(async () => {
 		show()		// slide the login
 
-		console.log("!!!", { onetapClient })
-		/***
-		const x = $$props['onetap-client']
-		await tick();		// to counteract bug -> https://github.com/sveltejs/svelte/issues/2227
+		console.log("!!!", { aaa })		// also here, 'aaa' is undefined!
 
-		onetapClient = x
-		***/
+		await tick();		// inspired by -> https://github.com/sveltejs/svelte/issues/2227
+		console.log("!!!2", { aaa })		// ..still undefined
 	})
 
 </script>
@@ -66,7 +70,7 @@
 	<aside part="frame" transition:slideFixed={{ duration: 600, easing: backOut }} >
 		<slot />
 		{#if onetapClient}
-			<private-onetap client={ onetapClient } />
+			<OneTap client={ onetapClient } />
 		{/if}
 		<button on:click={ vanish }>Vanish me!</button>
 	</aside>

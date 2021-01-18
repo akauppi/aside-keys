@@ -1,5 +1,3 @@
-<svelte:options tag="private-onetap" />
-
 <!--
 - src/OneTap.svelte
 -
@@ -12,20 +10,19 @@
 <script>
   import { onMount } from 'svelte'
 
-  let client;   // "blah...-...halb.apps.googleusercontent.com"
+  // Svelte note:
+  //  - 'let client' should work, but gives 'undefined' :(
+  //  - '$$props['client']' works
+  //
+  //let client;   // "blah...-...halb.apps.googleusercontent.com"
 
-  onMount( () => {
-    setTimeout(() => {
-      console.log("!!!2", { client })   // still "undefined" - why??? DEBUG
-    }, /*10*/ 0)
+  const client = $$props['client'];    // YES!
 
-    console.log("!!!", { client })
-    /*if (!client) {
-      throw new Error("Missing 'client'")
-    }*/
-  })
+  if (!client) {    // tbd. enable once we get a value
+    throw new Error("Missing 'client'")
+  }
 </script>
 
 <div>
-  <h1>client {client}</h1>
+  <h1>client { client }</h1>
 </div>
