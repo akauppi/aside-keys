@@ -1,12 +1,18 @@
 <svelte:options tag="aside-keys" />
 
 <script>
-	import {onMount, tick} from 'svelte'
-	import {slideFixed} from './tools/slideFixed'
-
+	import {onMount, onDestroy, tick} from 'svelte'
 	// tbd. Allow the tag to give 'easing=...' as strings :)   ..or custom CSS field??
 	import {backOut} from 'svelte/easing'
-	import OneTap from "./OneTap.svelte";
+
+	import firebase from "firebase/app"
+	import 'firebase/auth'
+
+	import {slideFixed} from './tools/slideFixed'
+	//import OneTap from "./OneTap.svelte";
+
+	import FirebaseAuth from './FirebaseAuth.svelte'
+	import { fbUserStoreGen } from "./FirebaseAuthStore"
 
 	/*** nah?
 	const validProviders = new Set([
@@ -37,6 +43,7 @@
 	* ANOTHER SVELTE NOTE: ‼️❗️️️
 	* 	Getting *any* prop with just 'let abc' within a web component does not seem to work. '$$props' does. (Svelte 3.31.2)
   */
+	/*** disabled (not using One Tap)
 	//let onetapClient;		// e.g. "1016...-...1a3lt.apps.googleusercontent.com"
 	const onetapClient = $$props['onetap-client'];		// works; until Svelte does the conversion
 
@@ -44,35 +51,44 @@
 	const aaa2 = $$props["aaa"];	// works
 
 	console.log("!!!1", { onetapClient, aaa, aaa2 })		// { "...", undefined, "aaa" }
+	***/
 
-	let visible;		// changing this activates the 'slideFixed' animation
+	let apiKey = $$props['api-key']
+	let authDomain = $$props['auth-domain']
 
-	function show() {
-		visible = true;
+	if (!apiKey || !authDomain) {
+		throw new Error("Please provide both 'api-key' and 'auth-domain' attributes for Firebase auth use.")
 	}
 
-	function vanish() {
-		visible = false;
-	}
+	const config = {
+		apiKey,
+		authDomain
+	};
 
-	onMount(async () => {
-		show()		// slide the login
+	let visible = false;		// changing this activates the 'slideFixed' animation
+	let unsub;
 
-		console.log("!!!", { aaa })		// also here, 'aaa' is undefined!
+	onMount( () => {
+		firebase.initializeApp(config);
 
-		await tick();		// inspired by -> https://github.com/sveltejs/svelte/issues/2227
-		console.log("!!!2", { aaa })		// ..still undefined
+		// Listen to the Firebase user status and show/hide the pane, accordingly
+		//
+		unsub = fbUserStoreGen().subscribe( v => {
+			if (v !== undefined) {		// skip initial value when state is not yet known
+				visible = !v;
+			}
+		})
 	})
 
+	onDestroy( () => {
+		unsub();
+	})
 </script>
 
 {#if visible}
 	<aside part="frame" transition:slideFixed={{ duration: 600, easing: backOut }} >
 		<slot />
-		{#if onetapClient}
-			<OneTap client={ onetapClient } />
-		{/if}
-		<button on:click={ vanish }>Vanish me!</button>
+		<FirebaseAuth apiKey={ apiKey } authDomain={ authDomain } />
 	</aside>
 {/if}
 
