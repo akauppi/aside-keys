@@ -58,15 +58,30 @@
 </style>
 
 <body>
+	<script type="module">
+		const el = document.querySelector('aside-keys')
+		if (!el.signOut) throw new Error("Unable to reach 'signOut'!")
+		signOut = el.signOut;
+
+		(async () => {		// note: you can just remove this code and write the values directly in 'aside-keys'
+			const { apiKey, authDomain } = await import('/config.js')
+			el.setAttribute("api-key", apiKey)
+			el.setAttribute("auth-domain", authDomain)
+		})();
+	</script>
+	<script>var signOut</script>
+
 	<main>
 	  <h1>ABC</h1>
 		<div>blah blah</div>
+		<br />
+		<button onclick="signOut()">Sign out test</button>
 	</main>
 
+	<!-- Replace 'api-key' and 'auth-domain' with your own -->
 	<aside-keys
 		api-key="..."
 		auth-domain="..."
-		--onetap-client="1016045831598-v2er2pcoc9h04eo8ltjdenp88081a3lt.apps.googleusercontent.com"
 	>
 		<h1>Hello - please log in!</h1>
 	</aside-keys>
