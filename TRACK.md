@@ -35,7 +35,12 @@
 
 - [Feature: allow components to opt out of custom elements build](https://github.com/sveltejs/svelte/issues/4228)
 
-  Would benefit from it.
-  
-  
-  
+  Would welcome it, though the work-around we have (two `svelte` steps in the Rollup config) works great!
+
+## Svelte: CSS within custom element (sub-elements) is lost
+
+Haven't found an issue for this. #help: Report to Svelte? 
+
+See `GoogleProvider.svelte`. It has a `style` section that is completely ignored in the process.
+
+(Did not start seeing the generated code to understand where it gets lost. But in order for Svelte to be powerful in making (also) web components, such an elementary abstraction should just work.

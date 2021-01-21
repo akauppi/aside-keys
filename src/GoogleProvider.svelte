@@ -51,21 +51,17 @@
     el.style.transform = 'none';
   }
 
-  /*** remove (leave note)
+  /*** ancient note
   // Assets are brought in via '@rollup/plugin-image' which compiles them into DOM nodes.
   //
   // Implementation note: Instead of injecting the imported note, we just steal its 'src' field to the template (simpler
   //    and allows 'alt' placement in a normal way).
   //
-  // Note: We could use SVG but that needs importing a font and Google does not provide a borderless 'G' logo, which is
-  //    weird. For the user, 2x is likely as good.
+  // NOTE: This did not really fly. Especially setting 'background-image: url(...)' seemed impossible (tried many ways)
+  //      and did not want to use an 'img'. Thus ended duplicating the SVG (edited), as part of the repo.
   //
   import svgLightNormal from './GoogleProvider/vector/btn_google_light_normal_ios.svg'
   console.log(svgLightNormal)
-
-  // #Byway: Unable to set 'background-image' dynamically, in the HTML section
-  //
-  let el;
 
   onMount( () => {
     el.style.backgroundImage = `url('${ svgLightNormal.src }')`;
@@ -74,6 +70,7 @@
 
   function signIn() {
     console.log("tbd. SIGN IN")
+    debugger;
   }
 </script>
 
@@ -84,7 +81,7 @@
 -->
 <!-- WARNING!!! Be EXTRA CAREFUL with the ';' in the inlined style. Syntax problems will silently change the look.
 -->
-<div on:click={signIn()}
+<div on:click={signIn}
      on:mousedown={ pressed }
      on:mouseup={ unpressed } bind:this={el}
   style="
@@ -94,6 +91,8 @@
     color: {theme.fontColor};
     font-family: 'Roboto', sans-serif;
     user-select: none;
+      -ms-user-select: none;
+      -webkit-user-select: none;
     height: 46px;
     width: 210px;
     margin: 0;
@@ -111,7 +110,7 @@
       transform: translate(-50%, -50%);
       white-space: nowrap;
       margin-left: 20px;
-  "
+    "
   >
     Sign in with Google
   </span>
