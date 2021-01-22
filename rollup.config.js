@@ -8,6 +8,8 @@ import css from 'rollup-plugin-css-only';
 
 const production = !process.env.ROLLUP_WATCH;
 
+import { spawn } from 'child_process'
+
 /*
 * With this, 'npm run dev' serves the files while 'rollup -c -w' watches for changes and recompiles. The other option
 * would be to use eg. 'concurrently' and 'wait-on' npm modules that are now not needed.
@@ -27,7 +29,7 @@ function serve() {
 	return {
 		writeBundle() {
 			if (server) return;
-			server = require('child_process').spawn(cmd[0], cmd.slice(1), {
+			server = spawn(cmd[0], cmd.slice(1), {
 				stdio: ['ignore', 'inherit', 'inherit'],
 				shell: true
 			});

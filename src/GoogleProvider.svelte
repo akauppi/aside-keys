@@ -68,9 +68,32 @@
   })
   ***/
 
+  const provider = new firebase.auth.GoogleAuthProvider();
+    //
+    // Note: additional roles can be an added feature. Just need to pass them via attrs ('roles=...[ ...]') and
+    //    document.
+    //    Same with "custom parameters" - if someone has a use case, let's bridge them. :)
+
+  onMount( () => {
+  });
+
   function signIn() {
-    console.log("tbd. SIGN IN")
-    debugger;
+
+    firebase.auth()
+      .signInWithPopup(provider)
+      .then( res => {
+        // Don't need to do anything. A central Firebase auth change listener informs the app (or already has).
+        const { credential, user } = res;
+        const token = credential.accessToken;
+
+        console.log("Signed in:", { token, user });
+      })
+      .catch( err => {
+        const { code, message, credential } = err;
+        console.error("Authentication failed:", { code, message, credential })
+
+        alert(`Authentication failed:\n\n${message}`);
+      });
   }
 </script>
 

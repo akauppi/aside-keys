@@ -7,9 +7,25 @@
 	<title>Glassy keys</title>
 
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">  <!-- avoid favicon fetch -->
-	<link rel='stylesheet' href='/global.css'>
 
 	<script defer type="module" src='/build/bundle.js'></script>
+
+	<!-- tbd. Do scripts in 'head' run before the DOM is built?
+	-
+	- Set the access values for 'aside-keys', before the DOM is built.
+	-
+	- Note: you can set values directly in 'aside-keys' (and remove this code).
+	-->
+	<script type="module">
+		const el = document.querySelector('aside-keys');
+
+		(async () => {
+			const { firebase } = await import('../.env.online.js')
+			const { apiKey, authDomain } = firebase;
+			el.setAttribute("api-key", apiKey)
+			el.setAttribute("auth-domain", authDomain)
+		})();
+	</script>
 </head>
 
 <style>
@@ -62,12 +78,6 @@
 		const el = document.querySelector('aside-keys')
 		if (!el.signOut) throw new Error("Unable to reach 'signOut'!")
 		signOut = el.signOut;
-
-		(async () => {		// note: you can just remove this code and write the values directly in 'aside-keys'
-			const { apiKey, authDomain } = await import('/config.js')
-			el.setAttribute("api-key", apiKey)
-			el.setAttribute("auth-domain", authDomain)
-		})();
 	</script>
 	<script>var signOut</script>
 

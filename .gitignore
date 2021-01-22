@@ -1,3 +1,5 @@
 /node_modules/
 /public/build/
 
+# You can also have this in version control
+/.env.online.js
