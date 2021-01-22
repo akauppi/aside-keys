@@ -107,7 +107,7 @@ This gives you a [page](https://console.firebase.google.com/u/0/project/YOUR_PRO
 
 ```
 var firebaseConfig = {
-  apiKey: "AIzaSyAd_eTlN_8XgJzB0Y0j0ICM9WmUWOAR5DA",
+  apiKey: "...",
   authDomain: "idp-try-090121.firebaseapp.com",
   ...
 ```
