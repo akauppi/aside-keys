@@ -9,23 +9,6 @@
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">  <!-- avoid favicon fetch -->
 
 	<script defer type="module" src='/build/bundle.js'></script>
-
-	<!-- tbd. Do scripts in 'head' run before the DOM is built?
-	-
-	- Set the access values for 'aside-keys', before the DOM is built.
-	-
-	- Note: you can set values directly in 'aside-keys' (and remove this code).
-	-->
-	<script type="module">
-		const el = document.querySelector('aside-keys');
-
-		(async () => {
-			const { firebase } = await import('../.env.online.js')
-			const { apiKey, authDomain } = firebase;
-			el.setAttribute("api-key", apiKey)
-			el.setAttribute("auth-domain", authDomain)
-		})();
-	</script>
 </head>
 
 <style>
