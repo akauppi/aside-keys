@@ -19,7 +19,7 @@ import { spawn } from 'child_process'
 * 		from other npm targets (and is simpler).
 */
 function serve() {
-	const cmd = "sirv --host 0.0.0.0 public --dev --no-clear".split(' ')
+	const cmd = "sirvy --host 0.0.0.0 public --dev --no-clear --forceportX".split(' ')
 	let server;
 
 	function toExit() {

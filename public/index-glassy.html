@@ -88,10 +88,12 @@
 		<button onclick="signOut()">Sign out test</button>
 	</main>
 
-	<!-- Replace 'api-key' and 'auth-domain' with your own -->
+	<!-- Replace 'api-key' and 'auth-domain' with your own; Google recommends not storing them in version control (one
+	- will get a warning), but they are publicly available to your audience.
+	-->
 	<aside-keys
-		api-key="..."
-		auth-domain="..."
+		api-key="$API_KEY"
+		auth-domain="$AUTH_DOMAIN"
 	>
 		<h1>Hello - please log in!</h1>
 	</aside-keys>

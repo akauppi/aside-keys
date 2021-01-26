@@ -23,20 +23,20 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv --host 0.0.0.0 public"
+    "start": "sirvy --host 0.0.0.0 --forceportX public"
   },
   "dependencies": {
-    "firebase": "^8.2.3"
+    "firebase": "^8.2.4"
   },
   "devDependencies": {
+    "@local/sirvy-cli": "file:tools/sirvy-cli",
     "@rollup/plugin-image": "^2.0.6",
     "@rollup/plugin-node-resolve": "^11.1.0",
-    "rollup": "^2.37.1",
+    "rollup": "^2.38.0",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-terser": "^7.0.0",
-    "sirv-cli": "^1.0.3",
     "svelte": "^3.31.2"
   },
   "//devDependencies": {
