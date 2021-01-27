@@ -3,7 +3,4 @@
 
 /tools/**/node_modules/
 
-/.sirvy.config.js
-
-# In case one does 'npm pack'
-*.tgz
+/init.json

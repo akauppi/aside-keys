@@ -74,9 +74,6 @@
     //    document.
     //    Same with "custom parameters" - if someone has a use case, let's bridge them. :)
 
-  onMount( () => {
-  });
-
   function signIn() {
 
     firebase.auth()

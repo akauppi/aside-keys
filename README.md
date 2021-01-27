@@ -1,21 +1,35 @@
+# Gears and Keys ⚙️ 🔩 🗝
+
+A collection of web components, for a modern (ES modules) web app.
+
+This is like the stuff that collects in the pockets - keys, screw drivers, what not.
+
+
 # aside-keys
 
->Note: The name of the project will change.
+![](.images/aside-keys.png)
 
-A web component for adding social login to one's modern web application.
+Allows signing in with [Firebase authentication](https://firebase.google.com/products/auth).
 
-<!-- tbd. place testing link in the GitHub description, once deployed
+A modern alternative to the traditional Firebase UI library - that's no longer needed. 🕺
+
+<!--
+.. short mentions of others here
+-->
+
+<!-- 
+## Playground
+
+tbd. place testing link in the GitHub description, once deployed
 -->
 
 ## Scope
 
-||in scope|out of scope|
+||||
 |---|---|---|
-|Browsers|"evergreen"|IE 11|
-|Auth frameworks|serverless||
-|"Email & pword" authentication|--|out|
-
-The author is needing such a component for a Firebase web project. Other auth frameworks can be considered (file an Issue/PR).
+|Evergreen browsers|<font color=green>&check; IN</font>|IE11 out|
+|Firebase|<font color=green>&check; IN</font>|server out|
+|Social login|<font color=green>&check; IN</font>|handling passwords out|
 
 ### Simplicity
 
@@ -23,19 +37,46 @@ One of the aims is to keep the code **simple**.
 
 No considerations of platforms other than the web.
 
-### Not knowing one's users' passwords
-
 No consideration of authentication mechanisms that involve asking the user a plain text password.
-
 
 
 ## Requirements
 
 - node
 
-To use authentication with your own project, you need to create a Google Identity Platform project (which automatically creates a Firebase project of the same id).
+To use `aside-keys`, you need to create a Google Identity Platform project (which automatically creates a Firebase project of the same id).
 
-You can, however, try the UI before this. We'll get back to creating the project, later.
+In particular:
+
+- get "API key" and "auth domain" from the [Firebase console](https://console.firebase.google.com/). <sub>[instructions](https://firebase.google.com/docs/projects/api-keys)</sub>
+  - create a "web app" entry for this
+  - create a file `init.json` that carries those keys:
+
+   ```
+   {
+     "apiKey": "AIza...l8hQ",
+     "authDomain": "your...firebaseapp.com"
+   }
+   ```
+
+Note that the degree of secrecy concerning those values is arguable. On the one side, they are visible for anyone using your web app. On the other, Google recommends *not* keeping them in version control - which is what we follow.
+
+Find your own sweet spot and study the Google documentation carefully.
+
+
+
+<!--
+Notes on secrecy:
+
+"API keys for Firebase services are ok to include in code or checked-in config files" (regarding _Firebase_)
+-->
+
+<!--
+Developed on:
+
+macOS 11.1
+node 15.x
+-->
 
 
 ## Getting started

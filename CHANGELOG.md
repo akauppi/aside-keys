@@ -1,5 +1,9 @@
 # Changelog
 
+## 26-Jan-2020
+
+- `init-json` attribute to `aside-keys`, for Firebase auth values
+
 ## 18-Jan-2020
 
 - Able to build a web component with Svelte subcomponent(s)
