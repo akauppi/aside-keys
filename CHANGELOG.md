@@ -1,5 +1,9 @@
 # Changelog
 
+## 27-Jan-2020
+
+- Building each component to a separate bundle.
+
 ## 26-Jan-2020
 
 - `init-json` attribute to `aside-keys`, for Firebase auth values

@@ -12,8 +12,8 @@
 
   import {slideFixed} from './tools/slideFixed'
 
-  import {fbUserStoreGen} from "./FirebaseAuthStore"
   import GoogleProvider from "./GoogleProvider.svelte";
+  import { firebaseUserStore } from "./FirebaseUserStore";    // only subscribe after Firebase is initialized
 
   /* SVELTE NOTE:
 	*		It seems mapping 'a-b' (attribute) to 'aB' (property) would be on the radar. Follow -> https://github.com/sveltejs/svelte/issues/3852
@@ -23,6 +23,7 @@
 	* ANOTHER SVELTE NOTE: ‼️❗️️️
 	* 	Getting *any* prop with just 'let abc' within a web component does not seem to work. '$$props' does. (Svelte 3.31.2)
   */
+  /** NOTE: disabled for now; let's see if 'init-json' is better...
   let apiKey = $$props['api-key']
   let authDomain = $$props['auth-domain']
 
@@ -32,25 +33,58 @@
   if (apiKey==='...' || authDomain==='...') {
     throw new Error("Please replace '...' with actual access values (might also be an internal bug).")
   }
-
   const config = {
     apiKey,
     authDomain
   };
+  **/
+  let initJson = $$props['init-json'];    // JSON-encoded string of '{ apiKey: ..., authDomain: ... }' |
+                                          // path to fetch the auth from (e.g. '/__/firebase/init.json')
 
-  // Call this early on (creation); subelements can rely in their 'onMount' that Firebase is initialized.
+  const configProm = (async _ => {    // Promise of { apiKey: <string>, authDomain: <string> }
+
+    if (initJson.startsWith("{")) {   // JSON string providing the values (NOT TESTED!!!)
+      const { apiKey, authDomain } = JSON.parse(initJson);   // tbd. errors
+      return { apiKey, authDomain };
+
+    } else {    // a URL pointing to the config
+      const resp = await fetch(initJson)    // JS note: browsers cannot 'import()' JSON (in 2021)
+        .catch(err => {
+          throw new Error(`Unable to read '${initJson}': ${err.message}`);
+        })
+
+      return resp.json()
+        .catch( err => {
+          throw new Error(`Bad JSON from '${initJson}': ${err.message}`)
+        });
+    }
+  })();
+
+  // Note: Potential race condition here.
   //
-  firebase.initializeApp(config);
-  console.log("Firebase initialized", config)
+  //    'GoogleProvider' imports 'firebase' separate from us, and if the auth values come via a URL, their fetching
+  //    takes time. Do we get them before 'GoogleProvider' uses 'firebase', and does it matter?
+
+  // Once we know the config
+  //
+  const firebaseUpProm = configProm.then( config => {
+    console.log("Ready to init with:", { config })
+
+    firebase.initializeApp(config);
+    console.log("Firebase initialized", config);
+  });
 
   let visible = false;		// changing this activates the 'slideFixed' animation
   let unsub;
 
-  onMount(() => {
+  onMount(async () => {
+    console.log("Mounting 'aside-keys'");
+
+    await firebaseUpProm;   // here we can wait until Firebase is initialized
 
     // Listen to the Firebase user status and show/hide the pane, accordingly
     //
-    unsub = fbUserStoreGen().subscribe(v => {
+    unsub = firebaseUserStore.subscribe(v => {
       if (v !== undefined) {		// skip initial value when state is not yet known
         visible = !v;
       }
@@ -67,7 +101,8 @@
     console.log("Signing OUT")
     firebase.auth().signOut();
   }
-  export {    // tbd. try 'export function signOut' above!
+
+  export {    // methods exposed
     signOut
   }
 </script>

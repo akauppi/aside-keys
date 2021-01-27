@@ -1,6 +1,5 @@
 import svelte from 'rollup-plugin-svelte';
 //import commonjs from '@rollup/plugin-commonjs';
-import image from '@rollup/plugin-image';
 import resolve from '@rollup/plugin-node-resolve';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
@@ -40,51 +39,70 @@ function serve() {
 	};
 }
 
-export default {
-	input: 'src/main.js',
-	output: {
-		sourcemap: true,
-		format: 'es',
-		name: 'app',
-		file: 'public/build/bundle.js'
-	},
-	plugins: [
-		// Two rounds of Svelte - see -> https://github.com/sveltejs/svelte/issues/4228#issuecomment-626315086
-		//
-		svelte({		// web components
-			include: /\/[a-z][^/]+\.svelte$/,
-			compilerOptions: {
-				dev: !production,
-				customElement: true,
-			}
-		}),
-		svelte({		// normal Svelte classes
-			include: /\/[A-Z][^/]+\.svelte$/,
-			compilerOptions: {
-				dev: !production,
-				customElement: false,
-			}
-		}),
+// Create separate bundles for each component.
+//
+function gen(name) {
+  const ret = {
+    input: `src/${name}.svelte`,
+    output: {
+      sourcemap: true,
+      format: 'es',
+      name: name,     // tbd. where does this matter?
+      file: `public/build/${name}.js`
+    },
+    plugins: [
+      // Two rounds of Svelte - see -> https://github.com/sveltejs/svelte/issues/4228#issuecomment-626315086
+      //
+      svelte({		// web components
+        include: /\/[a-z][^/]+\.svelte$/,
+        compilerOptions: {
+          dev: !production,
+          customElement: true,
+        }
+      }),
+      svelte({		// Svelte (sub)components
+        include: /\/[A-Z][^/]+\.svelte$/,
+        compilerOptions: {
+          dev: !production,
+          customElement: false,
+        }
+      }),
 
-		css(),
-    image({
-      dom: true
-    }),
+      css(),
 
-		resolve({
-			modulesOnly: true,
-			//browser: true,		// keep disabled
-			//dedupe: ['svelte']
-		}),
-		//commonjs(),
+      resolve({
+        modulesOnly: true,
+        //browser: true,		// keep disabled
+        //dedupe: ['svelte']
+      }),
+      //commonjs(),
 
-		!production && serve(),		// serve 'public'
-		!production && livereload('public'),
+      // If building for production ('npm run build'), minify
+      production && terser()
+    ],
+    watch: {
+      clearScreen: false
+    }
+  };
 
-		// If building for production ('npm run build'), minify
-		production && terser()
-	],
-	watch: {
-		clearScreen: false
-	}
-};
+  return ret;
+}
+
+const devNull = '/dev/null';    // needs changing on Windows
+
+export default [
+  gen('aside-keys'),
+
+  // Separate target for running the server.
+  !production && {
+    input: 'src/nope.js',   // Rollup requires this field; using '/dev/null' didn't cut it
+    output: {
+      sourcemap: false,
+      file: devNull
+    },
+    plugins: [
+      serve(),
+      livereload('public')
+    ]
+  }
+];
