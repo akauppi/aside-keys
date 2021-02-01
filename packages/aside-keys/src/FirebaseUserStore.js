@@ -3,11 +3,10 @@
 *
 * A Svelte readable store about the currently logged in user (or lack thereof).
 *
+* Available for applications (well, Svelte applications). The idea is that they would not need to be exposed to Firebase auth API.
+*
 * Usage:
 *   Subscribe to the exposed 'Readable' only after 'firebase.initializeApp()' has been called.
-*
-*   We benefit from the ES module's singularity (only loaded once and shareable by all). It is *QUESTIONABLE*
-*   to do any initializations in an ES module's main, but... let's try.
 */
 import {readable} from "svelte/store"
 
@@ -15,14 +14,19 @@ import {readable} from "svelte/store"
 //    Also, "upstairs" should 'import firebase/auth' (we do see if they have).
 //
 import firebase from 'firebase/app'
-if (!firebase.auth) throw Error("'firebase.auth' not imported")    // enough to do it once (in component main)
+import '@firebase/auth';
+
+if (!firebase.auth) throw Error("'firebase.auth' not found!")
 
 // Readable store of:
 //  - undefined: initial value, signin/signout status unknown (but has been asked from Firebase)
 //  - { email, uid, ... }: active user
 //  - null: no active user
 //
-const gen = _ => readable(
+// We only need one store per web app. ES module allows us an easy way to create a singleton, since each module is
+// loaded only once.
+//
+const firebaseUserStore = readable(
   undefined, // initial state
   (set) => {    // "called when the store gets its first subscriber"
 
@@ -43,23 +47,6 @@ const gen = _ => readable(
     }
   }
 )
-
-/*** disabled
-let cached;   // created by first subscriber
-
-function firebaseUserReadableGen() {    // () => { subscribe: ... }
-  if (!cached) {
-    cached = gen();
-  }
-  return cached;
-}
-
-export {
-  firebaseUserReadableGen   // 'firebase.initializeApp' *must* be called before this
-}
-***/
-
-const firebaseUserStore = gen();    // we only need one
 
 export {
   firebaseUserStore

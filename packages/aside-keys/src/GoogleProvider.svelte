@@ -17,7 +17,7 @@
 
 <script>
   import firebase from 'firebase/app'
-  if (!firebase.auth) throw new Error("'firebase.auth' not imported by the caller")
+  if (!firebase.auth) throw new Error("'firebase.auth' not imported by 'aside-keys'")
 
   import GLogo from './GoogleProvider/GLogo.svelte'
 

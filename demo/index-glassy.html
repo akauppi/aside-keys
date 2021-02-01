@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset='utf-8'>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+	<title>Glassy keys</title>
+
+	<link rel="icon" href="data:;base64,iVBORw0KGgo=">  <!-- avoid favicon fetch -->
+
+	<!--
+	- Note: When using 'import' from a framework, the node restrictions ('export' field of the package) are likely
+	-		onsidered (the package has privacy since it can restrict access). Not so here - which is why we might just
+	-		as well link to the sources, directly (note: this DOES NOT TEST that the 'npm' packaging works!).
+	-
+	- Your code will normally be way simpler. Maybe we should use Vite for the serving; allows us to have env variables...
+	-->
+	<script type="module">
+		import './@aside-keys/bundle.js';
+		import './@aside-keys/bundle.css';
+
+		// Inject '<aside-keys>' with suitable access values, once they are loaded.
+		(async _ => {
+			const {apiKey, authDomain} = await fetch('./@init.json').then(_ => _.json())
+				.catch(err => {
+					console.error("Failed to read or unwrap 'init.json':", err);
+					return;
+				});
+
+			console.debug("Auth values:", {apiKey, authDomain});
+
+			const div = document.createElement("div");		// just so we have a target for '.innerHTML'
+			div.innerHTML = `
+				<aside-keys api-key="${apiKey}" auth-domain="${authDomain}">
+					<h1>Hello - please log in!</h1>
+				</aside-keys>`;
+
+			document.body.appendChild(div);
+
+			/* we don't seem to be having the 'signOut' if 'aside-keys' is created this way. It is there, if in the DOM,
+			* from the beginning (please #help study this if you can..)
+		  *
+		  * nb. All it is is an alias to 'firebase.auth().signout()' so apps could use that, as well.
+		  *
+			// Set global 'signout' to what 'aside-keys' provides.
+			const el = div.children[0];
+			if (!el.signOut) throw new Error("Unable to reach 'signOut'!")
+			signOut = el.signOut;
+			*/
+		})();		// free running tail
+	</script>
+	<script>var signout;</script>
+</head>
+
+<style>
+	body {
+		margin: 0;
+		padding: 0;
+
+		/* glassy variant 1 */
+		background-attachment: fixed;
+	}
+	main {
+		width: 100%;
+		background-image: url("lenna.png");
+		background-size: cover;
+		height: 12em;
+		padding: 0.01em 1em;
+		color: lightgray;
+		border: 0;
+	}
+
+	/*
+	* Styling the web component using '::part'.
+	*
+	* Safari note:
+	*	  'backdrop-filter' is supported with prefix (versions 9..14) -> https://caniuse.com/css-backdrop-filter
+  */
+	aside-keys::part(frame) {
+		background: rgba(255, 255, 255, 0.3);		/* semi-transparent background */
+		backdrop-filter: blur(1em);
+		-webkit-backdrop-filter: blur(1em);
+
+		/* enable to get a thin border
+		border-left: 1px solid rgba(190,190,190,0.6);
+		border-bottom: 1px solid rgba(190,190,190,0.6);
+		*/
+		border-radius: 1em 0 0 1em;
+		box-shadow: 6px 6px 3px rgba(0, 0, 0, 0.2);
+
+		margin-top: 10px;
+	}
+
+	@supports not ((backdrop-filter: blur(0)) or (-webkit-backdrop-filter: blur(0))) {
+		aside-keys::part(frame) {
+	    background: rgba(255, 255, 255, 0.9);		/* more opaque */
+	  }
+	}
+</style>
+
+<body>
+	<main>
+	  <h1>ABC</h1>
+		<div>blah blah</div>
+		<br />
+		<button onclick="signOut()">Sign out test</button>
+	</main>
+
+	<!--
+	- Often, you would be able to place '<aside-keys>' directly here, with access values from eg. build variables.
+	- Us being a plain HTML file, this is a bit clumsier; JavaScript injects the node once values are fetched
+	- (this is because didn't want to store access values in the repo).
+	-
+	<aside-keys api-key="..." auth-domain="...">
+		<h1>Hello - please log in!</h1>
+	</aside-keys>
+	-->
+</body>
+</html>

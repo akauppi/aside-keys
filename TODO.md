@@ -1,6 +1,14 @@
 # Todo
 
-## Forcing the port
+## Option to slide down-up
 
-If we use a customized `sirv-cli`, we can make sure the requested port is granted. We'd prefer that (`sirv-cli` gives a warning if port is taken but proceeds with another, dynamic port) and a fail.
+[Google OneTap for Web](https://developers.google.com/identity/one-tap/web) uses the bottom for sliding authentication. This works great for a mobile phone size factor. 
 
+Maybe we support that as an alternative slide-out direction, one day.
+
+
+## Finish `tools/isPortFree.js`
+
+..so we won't end up with multiple servers, by mishap.
+
+>Note: Without using top level await. 

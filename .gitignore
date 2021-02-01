@@ -1,6 +1,8 @@
-/node_modules/
-/public/build/
+/**/node_modules/
+/**/dist/
 
-/tools/**/node_modules/
-
+# semi-secret
 /init.json
+
+# generated
+/.hack.js

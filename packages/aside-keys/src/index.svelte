@@ -23,7 +23,6 @@
 	* ANOTHER SVELTE NOTE: ‼️❗️️️
 	* 	Getting *any* prop with just 'let abc' within a web component does not seem to work. '$$props' does. (Svelte 3.31.2)
   */
-  /** NOTE: disabled for now; let's see if 'init-json' is better...
   let apiKey = $$props['api-key']
   let authDomain = $$props['auth-domain']
 
@@ -37,50 +36,18 @@
     apiKey,
     authDomain
   };
-  **/
-  let initJson = $$props['init-json'];    // JSON-encoded string of '{ apiKey: ..., authDomain: ... }' |
-                                          // path to fetch the auth from (e.g. '/__/firebase/init.json')
 
-  const configProm = (async _ => {    // Promise of { apiKey: <string>, authDomain: <string> }
+  // Firebase is initialized before the '.onMount' of imported submodules (e.g. 'GoogleProvide'), but _do not_ use
+  // it in the submodule bodies.
 
-    if (initJson.startsWith("{")) {   // JSON string providing the values (NOT TESTED!!!)
-      const { apiKey, authDomain } = JSON.parse(initJson);   // tbd. errors
-      return { apiKey, authDomain };
-
-    } else {    // a URL pointing to the config
-      const resp = await fetch(initJson)    // JS note: browsers cannot 'import()' JSON (in 2021)
-        .catch(err => {
-          throw new Error(`Unable to read '${initJson}': ${err.message}`);
-        })
-
-      return resp.json()
-        .catch( err => {
-          throw new Error(`Bad JSON from '${initJson}': ${err.message}`)
-        });
-    }
-  })();
-
-  // Note: Potential race condition here.
-  //
-  //    'GoogleProvider' imports 'firebase' separate from us, and if the auth values come via a URL, their fetching
-  //    takes time. Do we get them before 'GoogleProvider' uses 'firebase', and does it matter?
-
-  // Once we know the config
-  //
-  const firebaseUpProm = configProm.then( config => {
-    console.log("Ready to init with:", { config })
-
-    firebase.initializeApp(config);
-    console.log("Firebase initialized", config);
-  });
+  firebase.initializeApp(config);
+  console.log("Firebase initialized", config);
 
   let visible = false;		// changing this activates the 'slideFixed' animation
   let unsub;
 
   onMount(async () => {
     console.log("Mounting 'aside-keys'");
-
-    await firebaseUpProm;   // here we can wait until Firebase is initialized
 
     // Listen to the Firebase user status and show/hide the pane, accordingly
     //

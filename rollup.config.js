@@ -8,6 +8,17 @@ import css from 'rollup-plugin-css-only';
 const production = !process.env.ROLLUP_WATCH;
 
 import { spawn } from 'child_process'
+import { writeFileSync } from 'fs'
+
+const devNull = '/dev/null';    // needs changing on Windows
+
+// HACK
+// Create '.hack.js' for the Rollup serving target (it cannot take 'input: '/dev/null'').
+//
+const hackJs = ".hack.js";
+if (!production) {
+  writeFileSync(hackJs, "/* Empty source to please Rollup serve target. */\n" );
+}
 
 /*
 * With this, 'npm run dev' serves the files while 'rollup -c -w' watches for changes and recompiles. The other option
@@ -18,7 +29,7 @@ import { spawn } from 'child_process'
 * 		from other npm targets (and is simpler).
 */
 function serve() {
-	const cmd = "sirv --host 0.0.0.0 public --dev --no-clear".split(' ')
+	const cmd = "sirv --host 0.0.0.0 demo --dev --no-clear".split(' ')
 	let server;
 
 	function toExit() {
@@ -43,12 +54,11 @@ function serve() {
 //
 function gen(name) {
   const ret = {
-    input: `src/${name}.svelte`,
+    input: `packages/${name}/src/index.svelte`,
     output: {
       sourcemap: true,
       format: 'es',
-      name: name,     // tbd. where does this matter?
-      file: `public/build/${name}.js`
+      file: `packages/${name}/dist/bundle.js`
     },
     plugins: [
       // Two rounds of Svelte - see -> https://github.com/sveltejs/svelte/issues/4228#issuecomment-626315086
@@ -68,7 +78,15 @@ function gen(name) {
         }
       }),
 
-      css(),
+      // Svelte places CSS is separate files, by default (which is good; we just need to provide a plugin to handle
+      // the dishes).
+      //
+      css({
+        // Without specified output, 'rollup-plugin-css-only' creates either 'bundle.css' (if 'output.dir' was used)
+        // or 'dist/dist/{name}.css' (if 'file: dist/${name}' was used). Let's be specific.
+        //output: `${name}.css`
+        output: 'bundle.css'
+      }),
 
       resolve({
         modulesOnly: true,
@@ -88,21 +106,19 @@ function gen(name) {
   return ret;
 }
 
-const devNull = '/dev/null';    // needs changing on Windows
-
 export default [
   gen('aside-keys'),
 
   // Separate target for running the server.
-  !production && {
-    input: 'src/nope.js',   // Rollup requires this field; using '/dev/null' didn't cut it
+  ...( !production ? [{
+    input: hackJs,   // Rollup requires this field; couldn't resolve '/dev/null'.
     output: {
       sourcemap: false,
       file: devNull
     },
     plugins: [
       serve(),
-      livereload('public')
+      livereload('demo')
     ]
-  }
+  }] : [])
 ];

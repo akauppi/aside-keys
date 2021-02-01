@@ -1,0 +1,24 @@
+{
+  "name": "@akauppi/aside-keys",
+  "version": "0.0.0-alpha.1",
+  "description": "Web component for Firebase login",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akauppi/aside-keys.git"
+  },
+  "author": "akauppi@gmail.com",
+  "type": "module",
+  "files": [
+    "dist/**",
+    "!**/.gitkeep",
+    "src/**/*.js",
+    "src/**/*.svelte"
+  ],
+  "exports": {
+    ".": "./dist/bundle.js"
+  },
+  "dependencies": {
+    "firebase": "^8.2.5"
+  }
+}
