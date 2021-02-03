@@ -82,6 +82,11 @@
 {/if}
 
 <style>
+  :host {
+    /* web components are 'display: inline' by default */
+    display: block;
+  }
+
 	aside {
 		position: fixed;
 		top: 0;

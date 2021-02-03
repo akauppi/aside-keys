@@ -35,3 +35,17 @@ This would have the down side that:
 - expiring or otherwise making any breaking changes to *any* component would cause a major version bump on them all; essentially breaking semantic versioning
 
 This mechanism only makes sense if you aim at shipping a bundle of components, aware of each other and documented together.
+
+
+## Vite over Rollup
+
+[Vite](https://vitejs.dev/guide/introduction.html#why-native-esm) won the beauty contest over `npm run dev` by:
+
+- being able to magically serve ES modules (the components) to an HTML file
+- having static content replacement 
+
+The first feature means that our demo folder can reach the components via node packaging "peekholes" (`export` restrictions apply), instead of being able to bypass to private files. This makes the demo behave more like a real application, and that's great!
+
+The second feature is useful for passing the Firebase auth values. It eliminates the demo HTML having some `fetch` logic and injecting parameters to `aside-keys` tag.
+
+>Note: Vite was started for Vue.js but has since graduated to be framework agnostic.

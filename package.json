@@ -1,5 +1,5 @@
 {
-  "name": "@local/build",
+  "name": "@local/root",
   "description": "Web components (Firebase login, ...)",
   "license": "MIT",
   "repository": {
@@ -13,10 +13,12 @@
   },
   "--": "-- following stuff matters for development, only --",
   "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "--": "",
-    "//predev": "PORT=5000 node tools/portIsFree.sh $PORT || ( >&2 echo \"ERROR: Port '$PORT' is taken!\n\"; exit 2)"
+    "dev": "vite --port ${PORT:-5000} --clearScreen=false",
+    "build": "vite build"
+  },
+  "//scripts": {
+    "//build": "rollup -c",
+    "//dev": "rollup -c -w"
   },
   "dependencies": {
     "@local/aside-keys": "file:packages/aside-keys"
@@ -28,7 +30,7 @@
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-terser": "^7.0.2",
-    "sirv-cli": "^1.0.11",
-    "svelte": "^3.32.1"
+    "svelte": "^3.32.1",
+    "vite": "^2.0.0-beta.62"
   }
 }

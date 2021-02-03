@@ -2,7 +2,4 @@
 /**/dist/
 
 # semi-secret
-/init.json
-
-# generated
-/.hack.js
+/.env
