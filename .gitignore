@@ -2,4 +2,4 @@
 /**/dist/
 
 # semi-secret
-/.env
+/.env.local

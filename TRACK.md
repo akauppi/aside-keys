@@ -54,7 +54,7 @@ This shows in downstream projects (of ours), so fixing it would be NICE.
 
 ## Svelte/Kit
 
-Once it's released, try over Rollup.
+Once it's released, try over Vite/Rollup.
 
 [https://dev.to/ajcwebdev/a-first-look-at-svelte-kit-372h](https://dev.to/ajcwebdev/a-first-look-at-svelte-kit-372h)
 

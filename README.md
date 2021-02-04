@@ -1,4 +1,4 @@
-# Gears and Keys ⚙️ 🔩 🗝
+# Keys and Gears ⚙️ 🔩 🗝
 
 <!-- Root README: 
 - visible in GitHub
@@ -22,7 +22,7 @@ tbd. place testing link in the GitHub description, once deployed
 ..or maybe make a 'playground' link, above?
 -->
 
-## Scope <font size="+2">🔍🐜</font>
+## Scope <font size="+2">🔍</font>
 
 ||||
 |---|---|---|
@@ -33,6 +33,8 @@ tbd. place testing link in the GitHub description, once deployed
 ## Approach
 
 Keep the code **simple**.
+
+[More](APPROACH.md)
 
 
 ## Requirements
@@ -47,20 +49,17 @@ In particular:
 
 - get "API key" and "auth domain" from the [Firebase console](https://console.firebase.google.com/). <sub>[instructions](https://firebase.google.com/docs/projects/api-keys)</sub>
   - create a "web app" entry for this
-  - create a file `init.json` that carries those keys:
+  - create a file `.env.local` that carries those keys:
 
    ```
-   {
-     "apiKey": "AIza...l8hQ",
-     "authDomain": "your...firebaseapp.com"
-   }
+   # .env.local
+   VITE_API_KEY=AIza...
+   VITE_AUTH_DOMAIN=....firebaseapp.com
    ```
 
->The `init.json` is used by the sample HTML to read auth values, so they don't need to be stored in version control. This is slightly more complicated than in an actual web project, where you can likely pass build parameters that get injected directly to the `api-key` and `auth-domain` attributes. We wanted to keep the sample plain HTML and this is the best mechanism we came up with.
+Note that the degree of secrecy concerning those values is arguable. On the one side, they are visible for anyone using your web app. On the other, Google recommends *not* keeping them in version control (which is why we create the `.env.local` file).
 
-Note that the degree of secrecy concerning those values is arguable. On the one side, they are visible for anyone using your web app. On the other, Google recommends *not* keeping them in version control.
-
-It also seems that whether you create the values via Firebase or Google Identity Platform might affect this. If you use the latter, restrict their powers to authentication only by:
+It also seems that whether you create the values via Firebase or Google Identity Platform might affect this. If you use the latter, restrict their powers to authentication only:
 
 1. Google Cloud console > `APIs & Services` > `Credentials` > `API Keys` > `Browser key (auto created by Firebase)` (click)
 2. `API Restrictions` > `Restrict key` > `[x] Identity Toolkit API`
@@ -105,3 +104,4 @@ $ npm run build
 
 - [Learn about using and managing API keys for Firebase](https://firebase.google.com/docs/projects/api-keys) (Firebase docs)
 - Google Identity Platform: [Using API keys](https://cloud.google.com/docs/authentication/api-keys) (Google Cloud docs)
+

@@ -6,7 +6,7 @@
   import {backOut} from 'svelte/easing'
 
   import firebase from "firebase/app"
-  import 'firebase/auth'
+  import '@firebase/auth'
 
   if (!firebase.auth) throw new Error("Cannot see: firebase.auth")
 
