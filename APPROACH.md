@@ -24,6 +24,7 @@ This basically means:
 |test/demo|◉|◎|
 |versioning|◎|◉|
 |npm install|◎|◉|
+|testing|tbd.||
 |publishing|tbd.||
 |GitHub Issues|◉|◎|
 
