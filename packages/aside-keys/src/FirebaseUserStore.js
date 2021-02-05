@@ -34,6 +34,10 @@ const firebaseUserStore = readable(
 undefined, // initial state
 (set) => {    // "called when the store gets its first subscriber"
 
+  if (!firebase?.auth) {
+    throw new Error("Internal error: Failed to load 'firebase.auth'!")
+  }
+
   const unsub = firebase.auth().onAuthStateChanged( (user) => {
     if (user) {   // signed in
       const { email } = user;

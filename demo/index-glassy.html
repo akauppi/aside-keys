@@ -3,13 +3,12 @@
 <head>
 	<meta charset='utf-8'>
 	<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+	<link rel="icon" href="/flames.jpeg">
 
 	<title>Glassy keys</title>
 
-	<link rel="icon" href="data:;base64,iVBORw0KGgo=">  <!-- avoid favicon fetch -->
-
 	<script type="module">
-		import firebase from 'firebase/app'				// Vite resolves these 👍
+		import firebase from 'firebase/app'		// Vite resolves these 👍
 		import '@local/aside-keys'
 
 		const [apiKey, authDomain] = [import.meta.env.VITE_API_KEY, import.meta.env.VITE_AUTH_DOMAIN];
@@ -17,15 +16,15 @@
 		firebase.initializeApp({ apiKey, authDomain });
 		console.debug("Firebase initialized", { apiKey, authDomain });		// temp
 
-		// Activate 'aside-keys' by passing it 'firebase.auth'.
+		// Activate 'aside-keys' now that Firebase is initialized.
 		//
 		const el = document.querySelector('aside-keys');
-		//REMOVE if onMount is fine: el.start(firebase.auth);
+		el.start();
 
 		signOut = el.signOut;
 		if (!signOut) throw new Error("Unable to reach 'signOut'!")
 	</script>
-	<script>var signout;</script>
+	<script>var signOut;</script>
 </head>
 
 <style>
@@ -38,7 +37,7 @@
 	}
 	main {
 		width: 100%;
-		background-image: url("lenna.png");
+		background-image: url("/lenna.png");
 		background-size: cover;
 		height: 12em;
 		padding: 0.01em 1em;

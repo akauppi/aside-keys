@@ -1,6 +1,9 @@
 <svelte:options tag="aside-keys" />
 
 <script>
+  import firebase from 'firebase/app'
+  import '@firebase/auth'
+
   import {onMount, onDestroy} from 'svelte'
   // tbd. Allow the tag to give 'easing=...' as strings :)   ..or custom CSS field??
   import {backOut} from 'svelte/easing'
@@ -29,8 +32,7 @@
   }
   **/
 
-  // Firebase is initialized by the application. It explicitly calls 'start()' to give us a go-ahead (tbd. would
-  // 'onMount' work).
+  // Firebase is initialized by the application. It explicitly calls 'start()' to give us a go-ahead.
   //
   // Note: The alternative would be for us to run a secondary "Firebase application" (it's just a handle). We'd need
   //    API key and auth domain from the (real) app, for that.
@@ -49,6 +51,11 @@
       }
     })
   }
+
+  // Too early for initialization (happens before application script)
+  /*onMount(() => {
+    console.debug("!!! aside-keys onMount")
+  })*/
 
   onDestroy(() => {
     unsub();
