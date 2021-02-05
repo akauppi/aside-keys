@@ -8,51 +8,24 @@
 
 	<link rel="icon" href="data:;base64,iVBORw0KGgo=">  <!-- avoid favicon fetch -->
 
-	<script>var signout;</script>
 	<script type="module">
-		import '@local/aside-keys';		// Vite resolves this 👍
+		import firebase from 'firebase/app'				// Vite resolves these 👍
+		import '@local/aside-keys'
 
 		const [apiKey, authDomain] = [import.meta.env.VITE_API_KEY, import.meta.env.VITE_AUTH_DOMAIN];
 
+		firebase.initializeApp({ apiKey, authDomain });
+		console.debug("Firebase initialized", { apiKey, authDomain });		// temp
+
+		// Activate 'aside-keys' by passing it 'firebase.auth'.
+		//
 		const el = document.querySelector('aside-keys');
-		el.setAttribute( 'api-key', apiKey );
-		el.setAttribute( 'auth-domain', authDomain );
+		//REMOVE if onMount is fine: el.start(firebase.auth);
 
 		signOut = el.signOut;
 		if (!signOut) throw new Error("Unable to reach 'signOut'!")
-
-		/*** CLEANUP tbd.
-		// Inject '<aside-keys>' with suitable access values, once they are loaded.
-		(async _ => {
-			const {apiKey, authDomain} = await fetch('./@init.json').then(_ => _.json())
-				.catch(err => {
-					console.error("Failed to read or unwrap 'init.json':", err);
-					return;
-				});
-
-			console.debug("Auth values:", {apiKey, authDomain});
-
-			const div = document.createElement("div");		// just so we have a target for '.innerHTML'
-			div.innerHTML = `
-				<aside-keys api-key="${apiKey}" auth-domain="${authDomain}">
-					<h1>Hello - please log in!</h1>
-				</aside-keys>`;
-
-			document.body.appendChild(div);
-
-			/_* we don't seem to be having the 'signOut' if 'aside-keys' is created this way. It is there, if in the DOM,
-			* from the beginning (please #help study this if you can..)
-		  *
-		  * nb. All it is is an alias to 'firebase.auth().signout()' so apps could use that, as well.
-		  *
-			// Set global 'signout' to what 'aside-keys' provides.
-			const el = div.children[0];
-			if (!el.signOut) throw new Error("Unable to reach 'signOut'!")
-			signOut = el.signOut;
-			*_/
-		})();		// free running tail
-	***/
 	</script>
+	<script>var signout;</script>
 </head>
 
 <style>
@@ -109,10 +82,6 @@
 		<button onclick="signOut()">Sign out test</button>
 	</main>
 
-	<!--
-	- In your app, if using a framework such as Vue.js or Svelte, you may be able to inject the build-time Firebase
-	- access values directly to the attributes. With us, the JavaScript changes them on load.
-	-->
 	<aside-keys>
 		<h1>Hello - please log in!</h1>
 	</aside-keys>

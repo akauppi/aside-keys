@@ -5,24 +5,19 @@
   // tbd. Allow the tag to give 'easing=...' as strings :)   ..or custom CSS field??
   import {backOut} from 'svelte/easing'
 
-  import firebase from "firebase/app"
-  import '@firebase/auth'
-
-  if (!firebase.auth) throw new Error("Cannot see: firebase.auth")
-
   import {slideFixed} from './tools/slideFixed'
 
   import GoogleProvider from "./GoogleProvider.svelte";
   import { firebaseUserStore } from "./FirebaseUserStore";    // only subscribe after Firebase is initialized
 
-  /* SVELTE NOTE:
+  /** SVELTE NOTE:
 	*		It seems mapping 'a-b' (attribute) to 'aB' (property) would be on the radar. Follow -> https://github.com/sveltejs/svelte/issues/3852
 	*
 	* 	Note that the use of '$$props' takes away warnings about unrelated misuse of attributes (we'd like the warnings).
 	*
 	* ANOTHER SVELTE NOTE: ‼️❗️️️
 	* 	Getting *any* prop with just 'let abc' within a web component does not seem to work. '$$props' does. (Svelte 3.31.2)
-  */
+  *_/
   let apiKey = $$props['api-key']
   let authDomain = $$props['auth-domain']
 
@@ -32,22 +27,19 @@
   if (apiKey==='...' || authDomain==='...') {
     throw new Error("Please replace '...' with actual access values (might also be an internal bug).")
   }
-  const config = {
-    apiKey,
-    authDomain
-  };
+  **/
 
-  // Firebase is initialized before the '.onMount' of imported submodules (e.g. 'GoogleProvide'), but _do not_ use
-  // it in the submodule bodies.
-
-  firebase.initializeApp(config);
-  console.log("Firebase initialized", config);
-
+  // Firebase is initialized by the application. It explicitly calls 'start()' to give us a go-ahead (tbd. would
+  // 'onMount' work).
+  //
+  // Note: The alternative would be for us to run a secondary "Firebase application" (it's just a handle). We'd need
+  //    API key and auth domain from the (real) app, for that.
+  //
   let visible = false;		// changing this activates the 'slideFixed' animation
   let unsub;
 
-  onMount(async () => {
-    console.log("Mounting 'aside-keys'");
+  function start() {    // () => ()
+    console.log("Starting 'aside-keys'");
 
     // Listen to the Firebase user status and show/hide the pane, accordingly
     //
@@ -56,20 +48,19 @@
         visible = !v;
       }
     })
-  })
+  }
 
   onDestroy(() => {
     unsub();
   })
 
-  // Methods
-  //
   function signOut() {
     console.log("Signing OUT")
     firebase.auth().signOut();
   }
 
   export {    // methods exposed
+    start,
     signOut
   }
 </script>

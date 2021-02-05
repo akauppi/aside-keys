@@ -69,6 +69,7 @@ Developed on:
 
 macOS 11.1
 node 15.x
+npm 7.x
 -->
 
 
