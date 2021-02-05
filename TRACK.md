@@ -51,12 +51,3 @@ See `GoogleProvider.svelte`. It has a `style` section that is completely ignored
 This shows in downstream projects (of ours), so fixing it would be NICE.
 
 - [Installing rollup displays a warning due to fsevents using old versions](https://github.com/rollup/rollup/issues/3931)
-
-## Svelte/Kit
-
-Once it's released, try over Vite/Rollup.
-
-[https://dev.to/ajcwebdev/a-first-look-at-svelte-kit-372h](https://dev.to/ajcwebdev/a-first-look-at-svelte-kit-372h)
-
-(no real page to track it)
-
