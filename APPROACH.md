@@ -69,3 +69,39 @@ By keeping Svelte away from the root, the demos truly test that the web componen
 Though the auth component uses Firebase, there is no need for the developer to install `firebase-tools` (the JavaScript SDK).
 
 *If* we had it, fetching the active project's access values could be done automatically. But that's marginal.
+
+
+## Initialization from a web app
+
+Haven't found an obvious "best way" for this. Let's try in some apps and see what likes/dislikes are.
+
+The first question is whether to reuse the web app's Firebase "app" - or to have a completely separate one for authentication purposes. Both will likely work - the author thinks FirebaseUI library uses the "separate app" approach.
+
+### If sharing a Firebase app
+
+- Component needs to wait until the main web app has initialized its Firebase
+- This means `onMount` is not usable, or alternatively the web app would need to dynamically create and inject `aside-keys` instead of having it in the HTML template (can be done with if/else blocks in web frameworks, but still..)
+
+Pros:
+
+- kind of clear responsibilities. 
+- Firebase auth values (API key, auth domain) don't need to be passed to the component
+
+### If having our own Firebase app
+
+- Component still needs to be passed API key and auth domain
+- Sometimes these may be available as static HTML (or injected by a framework), but eg. Vite doesn't do that in development workflow.  Means the JavaScript will need to inject the values, later.
+
+   - The component could take injection of such values as a go-ahead.
+
+Pros:
+
+- no need for artificial `start()` method (not an established use pattern)
+
+
+### Verdict
+
+It's not clear.
+
+Current (5-Feb-2021) implementation is with the `.start()` but we could try the second approach..
+
