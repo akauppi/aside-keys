@@ -17,11 +17,16 @@
 
 <script>
   import firebase from 'firebase/app'
-  if (!firebase.auth) throw new Error("'firebase.auth' not imported by 'aside-keys'")
+  import '@firebase/auth'
 
   import GLogo from './GoogleProvider/GLogo.svelte'
 
+  function assert(cond,msg) {
+    if (!cond) throw new Error(msg);
+  }
+
   //PROPS
+  export let app;     // Firebase "app" handle      // <-- Q: How to make this compulsory? #Svelte #help
   export let light = false;    // Boolean
   ///PROPS
 
@@ -31,7 +36,8 @@
     //...
   }
 
-  import { onMount } from 'svelte'
+  assert(app, "Missing 'app' attribute");
+  assert(app.auth);
 
   let el;   // <div> (from 'onMounted' onwards)
 
@@ -76,7 +82,7 @@
 
   function signIn() {
 
-    firebase.auth()
+    app.auth()
       .signInWithPopup(provider)
       .then( res => {
         // Don't need to do anything. A central Firebase auth change listener informs the app (or already has).

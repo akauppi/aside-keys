@@ -6,6 +6,22 @@ import bundleSize from 'rollup-plugin-bundle-size';
 
 const build = !process.env.ROLLUP_WATCH;
 
+// #hack to mitigate a warning that Svelte plugin shouldn't give
+//
+// ... tbd. report to Svelte Plugin -> https://github.com/sveltejs/rollup-plugin-svelte/issues
+//
+function isUnnecessaryModuleReactivityWarning({ code, message}) {
+  return (code === 'module-script-reactive-declaration' &&
+    message === '"init" is declared in a module script and will not be reactive'
+  );
+}
+
+function isPassableCssWarning({ code, message }) {
+  return (code === 'css-unused-selector' &&
+    message === 'Unused CSS selector ".pressed"'
+  );
+}
+
 // Create separate bundles for each component.
 //
 export default {
@@ -24,6 +40,10 @@ export default {
       compilerOptions: {
         dev: !build,
         customElement: true,
+      },
+      onwarn: (warning, handler) => {
+        if (isUnnecessaryModuleReactivityWarning(warning)) return;
+        handler(warning);
       }
     }),
     svelte({		// Svelte (sub)components (Big.svelte)
@@ -34,13 +54,7 @@ export default {
       },
       // Let come CSS selectors pass.
       onwarn: (warning, handler) => {
-        const { code, message } = warning;
-
-        const pass = ['.pressed'];    // message: "Unused CSS selector: \".pressed\""
-
-        if (code === "css-unused-selector" && pass.some( s => message.includes(s) )) {
-          return;
-        }
+        if (isPassableCssWarning(warning)) return;
         handler(warning);
       }
     }),

@@ -1,0 +1,77 @@
+/*
+* src/UserStore.js
+*
+* A Svelte readable store about the currently logged in user (or lack thereof).
+*/
+import firebase from 'firebase/app'
+//import '@firebase/auth'
+
+import {readable} from "svelte/store"
+
+// Implementation note:
+//    ES modules are natural singletons, but did not figure out a way to utilize that, here.
+
+let cached;   // undefined | Readable of ({ ..Firebase user object } | null)
+
+class UserStore {
+  constructor(firebaseApp) {
+    cached ||= genStoreProm(firebaseApp);
+  }
+
+  get promise() {
+    return cached;
+  }
+}
+
+// Provide "impedance matching" between the Firebase user callbacks and Svelte store.
+//
+// Providing a Promise makes the initial "unknown" state of Firebase user listening more formal (no 'undefined' value).
+//
+// Value is:
+//  { email, uid, ..Firebase user object }    // user is signed in
+//  null  // no active user
+//
+function genStoreProm(app) {    // (Firebase app) => Promise of Readable of (null | { ..Firebase user object })
+
+  return new Promise( (resolve, reject) => {
+    let feeding = false;
+
+    try {
+      // Store initially has 'undefined' but we expose it only once there's a good value.
+      //
+      const store = readable(
+      undefined, // initial state
+      (set) => {    // "called when the store gets its first subscriber"
+
+        const unsub = app.auth().onAuthStateChanged( (v) => {
+          if (v === undefined) {
+            // initial callback; ignore
+          } else {
+            if (!feeding) {
+              resolve(store);   // will wake up listeners once we are out of this call
+              feeding = true;
+            }
+
+            if (v) {
+              const { email } = v;
+              console.log(`user ${email} is signed in`);
+            } else {    // null
+              console.log("user is signed out");
+            }
+            set(v);   // null | everything we got from Firebase
+          }
+        });
+
+        return /*stop*/ () => {  // "called when the last subscriber unsubscribes"
+          unsub()
+        }
+      });
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+
+export {
+  UserStore
+}

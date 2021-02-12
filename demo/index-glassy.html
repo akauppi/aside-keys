@@ -8,23 +8,36 @@
 	<title>Glassy keys</title>
 
 	<script type="module">
-		import firebase from 'firebase/app'		// Vite resolves these 👍
-		import '@local/aside-keys'
+		import { init, onUserChange, signOut } from '@local/aside-keys'
+		window.signOut = signOut;
 
 		const [apiKey, authDomain] = [import.meta.env.VITE_API_KEY, import.meta.env.VITE_AUTH_DOMAIN];
 
-		firebase.initializeApp({ apiKey, authDomain });
-		console.debug("Firebase initialized", { apiKey, authDomain });		// temp
-
-		// Activate 'aside-keys' now that Firebase is initialized.
+		// Activate 'aside-keys' by setting the auth values.
+		//
+		// Note: In a web framework one would use something like 'this:bind' to get the element handle.
 		//
 		const el = document.querySelector('aside-keys');
-		el.start();
 
-		signOut = el.signOut;
-		if (!signOut) throw new Error("Unable to reach 'signOut'!")
+		if (true) {
+			init({ apiKey, authDomain });
+		} else {		// init by setting the attributes
+			el.setAttribute('api-key', apiKey);
+			el.setAttribute('auth-domain', authDomain);
+		}
+
+		const elSignout = document.getElementById("signOut");
+
+		onUserChange( user => {
+			elSignout.style.display = user ? 'block':'none';		// show sign out button only when there is a user
+
+			if (!user) {
+				console.log("No active user.");
+			} else {
+				console.log("Active user:", user);
+			}
+		});
 	</script>
-	<script>var signOut;</script>
 </head>
 
 <style>
@@ -78,7 +91,7 @@
 	  <h1>ABC</h1>
 		<div>blah blah</div>
 		<br />
-		<button onclick="signOut()">Sign out test</button>
+		<button id="signOut" onclick="signOut()" style="display:none">Sign out test</button>
 	</main>
 
 	<aside-keys>

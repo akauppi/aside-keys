@@ -11,25 +11,32 @@
   "engines": {
     "node": ">= 13.2"
   },
-  "--": "-- following stuff matters for development, only --",
   "scripts": {
-    "build": "npm run --silent _build-all && vite build",
-    "_build-all": "(cd packages/aside-keys && npm run build)",
-    "--": "",
+    "build": "for DIR in packages/*; do (cd $DIR && npm run build); done",
     "dev": "concurrently -k -n aside-keys,vite \"npm run --silent _watch1\" \"vite --port ${PORT:-5000} --clearScreen=false\"",
     "_watch1": "(cd packages/aside-keys && npm run watch)",
     "-- ": "",
-    "preinstall": "(cd packages/aside-keys && npm install)"
+    "preinstall": "for DIR in packages/*; do (cd $DIR && npm install); done",
+    "//predev": "(cd packages/aside-keys && npm run watch)",
+    "//preinstall": "(cd packages/aside-keys && npm install)"
   },
   "dependencies": {
     "@local/aside-keys": "file:packages/aside-keys",
-    "firebase": "^8.2.6"
+    "firebase": "^8.2.7"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",
-    "vite": "^2.0.0-beta.64"
+    "vite": "^2.0.0-beta.67"
   },
-  "//devDependencies": {
-    "@rollup/plugin-node-resolve": "^11.1.1"
+  "//": {
+    "scripts.dev": [
+      "Using 'concurrently' since each of the processes remains running (watching)."
+    ],
+    "devDependencies": {
+      "concurrently": [
+        "If we have more components (say, >4), consider 'run-p' that can handle patterns (e.g. 'watch:**').",
+        "We're just more familiar with 'concurrently' and it only does one thing - which is nice."
+      ]
+    }
   }
 }
