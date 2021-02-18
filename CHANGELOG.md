@@ -1,5 +1,9 @@
 # Changelog
 
+## 18-Feb-2021 (0.0.0-alpha.6)
+
+- dependency updates
+
 ## 5-Jan-2021
 
 - Using Vite to resolve the node package names; works brilliantly! 🌟✨
