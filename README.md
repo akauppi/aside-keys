@@ -41,9 +41,11 @@ Keep the code **simple**.
 
 - node
 
-### Google Identity Platform cloud application
+### Google Identity Platform application or Firebase application
 
-To use `aside-keys`, you need to create a Google Identity Platform project (which automatically creates a Firebase project of the same id).
+To use `aside-keys`, you need to create a Google Identity Platform project (which automatically creates a Firebase project of the same id), or a Firebase web project.
+
+>Note: Google Identity Platform is essentially Firebase auth on steroids (without needing to use Firebase for anything else). Their APIs are the same.
 
 In particular:
 
@@ -57,7 +59,7 @@ In particular:
    VITE_AUTH_DOMAIN=....firebaseapp.com
    ```
 
-Note that the degree of secrecy concerning those values is arguable. On the one side, they are visible for anyone using your web app. On the other, Google recommends *not* keeping them in version control (which is why we create the `.env.local` file).
+Note that the degree of secrecy concerning those values is arguable. On the one side, they are visible for anyone using your web app. On the other, Google recommends *not* keeping them in version control.
 
 It also seems that whether you create the values via Firebase or Google Identity Platform might affect this. If you use the latter, restrict their powers to authentication only:
 
@@ -67,7 +69,7 @@ It also seems that whether you create the values via Firebase or Google Identity
 <!--
 Developed on:
 
-macOS 11.1
+macOS 11.2
 node 15.x
 npm 7.x
 -->

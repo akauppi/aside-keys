@@ -1,5 +1,9 @@
 # Changelog
 
+## 20-Feb-2021 (0.0.0-alpha.7)
+
+- revise and API changes; leaving only `init`.
+
 ## 18-Feb-2021 (0.0.0-alpha.6)
 
 - dependency updates

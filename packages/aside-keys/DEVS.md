@@ -10,3 +10,4 @@ Not here. The Svelte compilation step must happen before the changes are seen at
 2. `npm run build`
 3. test at the consuming project :)
 
+>Note: This only matters if you `npm link` to here. Doing development within the repo is handled by the watch commands.

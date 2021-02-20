@@ -31,7 +31,19 @@ export default {
     format: 'es',
     file: 'dist/bundle.js'
   },
-  external: [ /@?firebase\// ],   // leave out 'firebase/' and '@firebase/' namespaces
+  external: [
+    /^@?firebase\//,   // leave out 'firebase/' and '@firebase/' namespaces (and also 'tslib')
+  ],
+  /* for debugging
+  external: (id) => {
+    console.log(`External? ${id}`);
+
+    if (id.startsWith('@firebase/') || id.startsWith('firebase/')) {
+      return true;
+    } else {
+      return false;
+    }
+  },*/
   plugins: [
     // Two rounds of Svelte - see -> https://github.com/sveltejs/svelte/issues/4228#issuecomment-626315086
     //
