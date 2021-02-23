@@ -26,7 +26,7 @@
   }
 
   //PROPS
-  export let app;     // Firebase "app" handle      // <-- Q: How to make this compulsory? #Svelte #help
+  export let fah;     // Firebase "app" handle      // <-- Q: How to make this compulsory? #Svelte #help
   export let light = false;    // Boolean
   ///PROPS
 
@@ -36,8 +36,7 @@
     //...
   }
 
-  assert(app, "Missing 'app' attribute");
-  assert(app.auth);
+  assert(fah?.auth, "[INTERNAL] Missing 'fah' attribute, or not properly initialized.");
 
   let el;   // <div> (from 'onMounted' onwards)
 
@@ -74,6 +73,8 @@
   })
   ***/
 
+  // Note: Here we use the 'firebase.auth' namespace (not the "app" instance).
+  //
   const provider = new firebase.auth.GoogleAuthProvider();
     //
     // Note: additional roles can be an added feature. Just need to pass them via attrs ('roles=...[ ...]') and
@@ -82,7 +83,7 @@
 
   function signIn() {
 
-    app.auth()
+    fah.auth()
       .signInWithPopup(provider)
       .then( res => {
         // Don't need to do anything. A central Firebase auth change listener informs the app (or already has).

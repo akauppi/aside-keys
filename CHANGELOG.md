@@ -3,6 +3,7 @@
 ## 20-Feb-2021 (0.0.0-alpha.7)
 
 - revise and API changes; leaving only `init`.
+- provided sample code for tying Firebase Auth API to Svelte 3, Vue.js 3 reactivity.
 
 ## 18-Feb-2021 (0.0.0-alpha.6)
 

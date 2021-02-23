@@ -8,13 +8,16 @@
   - with proposed [PR](https://github.com/sveltejs/svelte/pull/4998)
 
 
+<!-- Ignore: not concerning us (yet true)
 ## Svelte: custom components with `hyph-ened` attributes
 
 - [Allow hyphenated properties to be defined in a component](https://github.com/sveltejs/svelte/issues/3852)
   - once shipping, remove the `$$props` use
-
+-->
 
 ## Svelte: setting props of web components
+
+>Note: No longer essential for us. Track anyhow, for general interest.
 
 - [Prop initialization in web/standalone components](https://github.com/sveltejs/svelte/issues/2227)
 
@@ -29,6 +32,7 @@
 
 - [issues with `feature: custom element`](https://github.com/sveltejs/svelte/labels/feature%3A%20custom%20element)
 
+  - 21-Feb-21: 39 open 👍
   - 17-Jan-21: 41 open
 
 ## Svelte: ability to have normal (private) components, used by a web component
@@ -39,17 +43,11 @@
 
 ## Svelte: CSS within custom element (sub-elements) is lost
 
-Haven't found an issue for this. #help: Report to Svelte? 
+Haven't found an issue for this. `#help`: Report to Svelte? 
 
 See `GoogleProvider.svelte`. It has a `style` section that is completely ignored in the process.
 
 (Did not start seeing the generated code to understand where it gets lost. But in order for Svelte to be powerful in making (also) web components, such an elementary abstraction should just work.
 
-
-## Rollup: `fsevents` 2.1 warning
-
-This shows in downstream projects (of ours), so fixing it would be NICE.
-
-- [Installing rollup displays a warning due to fsevents using old versions](https://github.com/rollup/rollup/issues/3931)
 
 

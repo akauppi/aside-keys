@@ -75,6 +75,12 @@ The `aside-keys` web component handles the visual side of the authentication. It
 
 The HTML you place in the slot (between the `aside-keys` start and end tags) is completely up to you. You should somehow indicate what the panel is about.
 
+<!-- WIP
+The `display:none` seems to be needed so that the slotted text contents does not flash at load.[^1]
+
+[^1]: Do contribute if you know a way that doesn't need such application side patching.
+—->
+
 ### CSS
 
 The component *does not style itself*. You provide the style using [CSS ::part](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) (MDN Web Docs).
@@ -129,35 +135,12 @@ That's all you need to do.
 
 The call returns a `Promise` that you can listen to, to know when initialization has reached a known state.
 
-Note that you can do that - and everything else - using the [Firebase auth API](https://firebase.google.com/docs/reference/js/firebase.auth.Auth).
+Everything else - listening to user changes and signing out - is done using the [Firebase auth API](https://firebase.google.com/docs/reference/js/firebase.auth.Auth).
 
-#### Listening to user changes
+Bonus! Are you interested in sample code to bind the user notifications to the front end reactivity system. Here are samples for:
 
-Firebase auth API can be used to listen to user state changes. However, we provide a helper function you might prefer:
-
-```
-import { onUserChange } from '@akauppi/aside-keys`
-
-const unsub = onUserChange( user => {		// (null | User) => () => ()
-  if (user) console.log("Hey there!", user);
-  else console.log("Sad to see you go!");
-});  
-```
-
-We protect you from the Firebase auth API's `undefined` values, which are unnecessary from an application's point of view (they signal "we don't know yet").
-
-The call returns a `unsub` function to call when further events are no longer necessary.
-
-#### Sign out
-
-```
-import { signOut } from '@akauppi/aside-keys'
-
-signOut();   // () => Promise of ()
-```
-
-Same as calling `.auth().signOut()` on your Firebase app handle.
-
+- [Svelte 3](bonus/svelte3.js)
+- [Vue.js 3](bonus/vue3.js)
 
 ## Inside look 🔬
 

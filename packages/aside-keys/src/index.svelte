@@ -6,41 +6,12 @@
 - This is responsible for the visual side. ~~Allows initialization with attributes, at least for now.~~ (tbd. remove tail)
 -->
 <script>
-  import {onDestroy} from 'svelte'
   // tbd. Allow the tag to give 'easing=...' as strings :)   ..or custom CSS field??
   import {backOut} from 'svelte/easing'
 
   import {slideFixed} from './tools/slideFixed'
 
   import GoogleProvider from "./GoogleProvider.svelte";
-
-  /** disabled (initializing only by the '.init' export, and by a Firebase app handle)
-  //PROPS
-  /** SVELTE NOTE:
-	*		It seems mapping 'a-b' (attribute) to 'aB' (property) would be on the radar. Follow -> https://github.com/sveltejs/svelte/issues/3852
-	* 	Note: use of '$$props' takes away warnings about unrelated misuse of attributes (we'd like the warnings).
-  *_/
-  let apiKey = $$props['api-key'];
-  let authDomain = $$props['auth-domain'];
-  ///PROPS
-
-  let unsub;
-
-  // When 'apiKey' or 'authDomain' are known, take care of initialization.
-  //
-  $: if (apiKey && authDomain) {
-    unsub = init({ apiKey, authDomain });
-  }
-
-  onDestroy(() => {
-    unsub();
-  })
-
-  export {    // props and methods exposed
-    apiKey,
-    authDomain
-  }
-  **/
 </script>
 
 <!--
@@ -63,61 +34,52 @@
     if (!cond) throw new Error(msg);
   }
 
-  // Singleton state
+  // Svelte notes:
+  //    We NEED to make this a store (either 'readable' or 'writable') for the HTML template to be able to follow
+  //    a value from _module_ scope. '$:' does not work here.
   //
-  let user = writable(undefined);
+  //    'readable' would be nice, but its initialization with 'init(fah)' causes a chicken/egg chase 🐔🐣 the author
+  //    couldn't solve. Thus, 'writable' it is (we don't expose it so it's all right..).
+  //
+  //    [If you needed to expose a writable as readable, do a 'computed'.]
+  //
+  const user = writable(undefined);   // Store of undefined | null | { ..Firebase user object }  ; used by the HTML template
+  let myFah;    // undefined | FirebaseApp
 
-  let unsub;    // function for releasing the resources taken in 'init' (not currently exposed)
+  let unsub;    // () => (); we don't expose it
 
-  let myApp;    // undefined | FirebaseApp
-
-  /*
-  * Initialize the whole authentication system.
-  *
-  * Returns a Promise that can be used to see, when the authentication state is known (some ms's after the call).
-  *   This is merely a helper function; same can be reached by listening to the first user entry.
-  */
   function init(fah) {   // (FirebaseApp) => Promise of ()
-    assert(fah.auth, "INTERNAL ERROR: Firebase auth not properly initialized.");
-      // this would be an indication of eg. bad module mapping (has happened with Vite)
+    myFah = fah;
 
-    unsub = fah.auth().onAuthStateChanged( (v) => {
-      assert( v !== undefined );
+    unsub = myFah.auth().onAuthStateChanged( (v) => {
+      assert(v !== undefined, "Unexpected 'undefined' from '.onAuthStateChanged'");   // it used to give 'undefined' but seems no more (firebase 8.2.9)
       user.set(v);
     });
 
-    myApp = fah;
-  }
-
-  // Subscribe to hearing of user changes.
-  //
-  function onUserChange(f) {   // ( (null | { ..Firebase user object }) => () ) => () => ()    // unsub function
-    const unsub = user.subscribe( v => {
-      if (v !== undefined) f(v);
+    // Note: Keeping the promise-returning unrelated to the above code (freedom to dump this).
+    //
+    const prom = new Promise( (resolved,rejected) => {
+      const unsub2 = myFah.auth().onAuthStateChanged(v => {
+        resolved();
+        unsub2();
+      });
     });
-    return unsub;
-  }
 
-  // Helper: sign out
-  //
-  function signOut() {   // () => Promise of ()
-    return myApp.auth().signOut();
+    return prom;
   }
 
   export {
-    init,
-    onUserChange,
-    signOut
+    init
   }
 </script>
 
 <!--
 - tbd. try not removing the nodes, but just sliding them out of sight when 'user' changes (does work now, though..)
 -->
-{#if $user === null && myApp !== undefined}
+{#if $user === null && myFah}
 	<aside part="frame" transition:slideFixed={ {duration: 600, easing: backOut} } >
 		<slot />
-    <GoogleProvider app={myApp}/>
+    <GoogleProvider fah={myFah}/>
 	</aside>
 {/if}
 

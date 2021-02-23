@@ -10,8 +10,7 @@
 *     position: fixed;
 *   }
 */
-
-const USE_TICK_WORKAROUND = true
+const USE_TICK_WORKAROUND = true;
 
 function slideFixed(node, {
   duration = 1000,

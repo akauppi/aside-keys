@@ -9,8 +9,9 @@
 
 	<script type="module">
 		import firebase from 'firebase/app'
-		import { init, onUserChange, signOut } from '@local/aside-keys'
-		window.signOut = signOut;
+		import '@firebase/auth'
+
+		import { init } from '@local/aside-keys'
 
 		const [apiKey, authDomain] = [import.meta.env.VITE_API_KEY, import.meta.env.VITE_AUTH_DOMAIN];
 
@@ -19,7 +20,7 @@
 
 		const elSignout = document.getElementById("signOut");
 
-		onUserChange( user => {
+		fah.auth().onAuthStateChanged( user => {
 			elSignout.style.display = user ? 'block':'none';		// show sign out button only when there is a user
 
 			if (!user) {
@@ -28,6 +29,12 @@
 				console.log("Active user:", user);
 			}
 		});
+
+		window.signOut = () => {
+			fah.auth().signOut().catch( err => {
+				console.error("Sign out failed:", err);
+			});
+		}
 	</script>
 </head>
 
@@ -85,7 +92,7 @@
 		<button id="signOut" onclick="signOut()" style="display:none">Sign out test</button>
 	</main>
 
-	<aside-keys>
+	<aside-keys>	<!-- __style="display: none;" tbd.? -->
 		<h1>Hello - please log in!</h1>
 	</aside-keys>
 </body>

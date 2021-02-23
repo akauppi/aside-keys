@@ -16,10 +16,11 @@
     "dev": "concurrently -k -n aside-keys,vite \"npm run --silent _watch1\" \"vite --port 5000\"",
     "_watch1": "(cd packages/aside-keys && npm run watch)",
     "-- ": "",
-    "predev": "PORT=5000 npm run --silent _checkPortIsFree",
-    "preinstall": "for DIR in packages/*; do (cd $DIR && npm install); done",
+    "predev": "PORT=5000 npm run --silent _checkPortIsFree && npm run --silent _checkEnvLocal",
+    "preinstall": "for DIR in packages/*; do (cd $DIR && npm install && npm run build); done",
     "-- -": "",
-    "_checkPortIsFree": "tools/port-is-free.sh $PORT || ( >&2 echo \"ERROR: Port '$PORT' is taken!\n\"; exit 2)"
+    "_checkPortIsFree": "tools/port-is-free.sh $PORT || ( >&2 echo \"ERROR: Port '$PORT' is taken!\n\"; exit 2)",
+    "_checkEnvLocal": "[[ -f .env.local ]] || ( >&2 echo \"ERROR: '.env.local' is missing\n\"; exit 4)"
   },
   "dependencies": {
     "@local/aside-keys": "file:packages/aside-keys",
@@ -27,13 +28,17 @@
   },
   "devDependencies": {
     "concurrently": "^6.0.0",
-    "vite": "^2.0.1"
+    "vite": "^2.0.2"
   },
   "//": {
     "scripts": {
       "dev": [
         "If we have more components (say, >4), consider 'run-p' over 'concurrently'. It can handle patterns (e.g. 'watch:**').",
         "We're just more familiar with 'concurrently' - and it works well."
+      ],
+      "preinstall": [
+        "Need to build the children before we can 'npm install', since we're using them via 'file:' and they are Svelte-made.",
+        "(should maybe opt for a real dependency-oriented build system, instead)"
       ]
     }
   }
