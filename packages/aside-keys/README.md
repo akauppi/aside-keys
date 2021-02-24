@@ -79,7 +79,7 @@ The HTML you place in the slot (between the `aside-keys` start and end tags) is 
 The `display:none` seems to be needed so that the slotted text contents does not flash at load.[^1]
 
 [^1]: Do contribute if you know a way that doesn't need such application side patching.
-—->
+-->
 
 ### CSS
 
