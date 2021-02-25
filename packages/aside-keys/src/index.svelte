@@ -24,8 +24,7 @@
 -   - modules imported here are also visible in the instance code (normal 'script').
 -->
 <script context="module">
-  import firebase from 'firebase/app'
-  import '@firebase/auth'
+  import { getAuth } from 'firebase/auth'
   import {writable} from 'svelte/store'
 
   // Our things show to the instances, but not the other way round.
@@ -44,14 +43,14 @@
   //    [If you needed to expose a writable as readable, do a 'computed'.]
   //
   const user = writable(undefined);   // Store of undefined | null | { ..Firebase user object }  ; used by the HTML template
-  let myFah;    // undefined | FirebaseApp
+  let myFbAuth;    // undefined | FirebaseApp; used by HTML template and provider-specific components
 
   let unsub;    // () => (); we don't expose it
 
-  function init(fah) {   // (FirebaseApp) => Promise of ()
-    myFah = fah;
+  function init(fbAuth) {   // (Firebase Auth) => Promise of ()
+    myFbAuth = fbAuth;
 
-    unsub = myFah.auth().onAuthStateChanged( (v) => {
+    unsub = fbAuth.onAuthStateChanged( (v) => {
       assert(v !== undefined, "Unexpected 'undefined' from '.onAuthStateChanged'");   // it used to give 'undefined' but seems no more (firebase 8.2.9)
       user.set(v);
     });
@@ -59,7 +58,7 @@
     // Note: Keeping the promise-returning unrelated to the above code (freedom to dump this).
     //
     const prom = new Promise( (resolved,rejected) => {
-      const unsub2 = myFah.auth().onAuthStateChanged(v => {
+      const unsub2 = fbAuth.onAuthStateChanged(v => {
         resolved();
         unsub2();
       });
@@ -76,10 +75,10 @@
 <!--
 - tbd. try not removing the nodes, but just sliding them out of sight when 'user' changes (does work now, though..)
 -->
-{#if $user === null && myFah}
+{#if $user === null && myFbAuth}
 	<aside part="frame" transition:slideFixed={ {duration: 600, easing: backOut} } >
 		<slot />
-    <GoogleProvider fah={myFah}/>
+    <GoogleProvider fbAuth={myFbAuth}/>
 	</aside>
 {/if}
 

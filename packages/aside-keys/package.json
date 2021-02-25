@@ -1,6 +1,6 @@
 {
   "name": "aside-keys",
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.2-alpha.1",
   "description": "Web component for Firebase social login",
   "license": "MIT",
   "repository": {
@@ -14,6 +14,7 @@
   ],
   "files": [
     "dist/**",
+    ".images/aside-keys.png",
     "src/**/*.js",
     "src/**/*.svelte"
   ],
@@ -21,20 +22,21 @@
     ".": "./dist/bundle.js"
   },
   "publishConfig": {
-    "tag": "alpha"
+    "tag": "next"
   },
   "scripts": {
     "build": "rollup -c",
     "watch": "rollup -c -w",
     "--": "",
-    "clean": "rm -f dist/*"
+    "prepare": "npm run build",
+    "//clean": "rm -f dist/*"
   },
   "peerDependencies": {
-    "firebase": "^8.0.0"
+    "firebase": "^0.900.15"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^11.2.0",
-    "firebase": "^8.2.9",
+    "firebase": "^0.900.15",
     "rollup": "^2.39.1",
     "rollup-plugin-bundle-size": "^1.0.3",
     "rollup-plugin-css-only": "^3.1.0",

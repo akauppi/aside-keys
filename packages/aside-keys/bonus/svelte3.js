@@ -1,13 +1,14 @@
 /*
 * Sample code: represent the active user as a Svelte 3 'Readable'.
 */
-import firebase from 'firebase/app'
-import '@firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 import {readable} from 'svelte/store'
 
+const auth = getAuth(fbApp);
+
 const user = readable(undefined, set => {
-  const unsub = firebase.auth().onAuthStateChanged( (user) => {
+  const unsub = onAuthStateChanged( auth, (user) => {
     set(user);
   });
   return unsub;

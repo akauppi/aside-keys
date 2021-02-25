@@ -10,7 +10,7 @@
 Check that `CHANGELOG.md` contains mention of what the release contains.
 
 ```
-$ npm publish --tag alpha [--dry-run]
+$ npm publish --tag next [--dry-run]
 ...
 Enter OTP: ...
 + aside-keys@0.0.1-alpha.1

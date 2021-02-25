@@ -8,19 +8,20 @@
 	<title>Glassy keys</title>
 
 	<script type="module">
-		import firebase from 'firebase/app'
-		import '@firebase/auth'
+		import { initializeApp } from 'firebase/app'
+		import { getAuth } from 'firebase/auth'
 
 		import { init } from '@local/aside-keys'
 
 		const [apiKey, authDomain] = [import.meta.env.VITE_API_KEY, import.meta.env.VITE_AUTH_DOMAIN];
 
-		const fah = firebase.initializeApp({ apiKey, authDomain });
-		init(fah);
+		const fah = initializeApp({ apiKey, authDomain });
+		const fbAuth = getAuth(fah);
+		init( fbAuth );
 
 		const elSignout = document.getElementById("signOut");
 
-		fah.auth().onAuthStateChanged( user => {
+		fbAuth.onAuthStateChanged( user => {
 			elSignout.style.display = user ? 'block':'none';		// show sign out button only when there is a user
 
 			if (!user) {
@@ -31,7 +32,7 @@
 		});
 
 		window.signOut = () => {
-			fah.auth().signOut().catch( err => {
+			fbAuth.signOut().catch( err => {
 				console.error("Sign out failed:", err);
 			});
 		}

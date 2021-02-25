@@ -16,8 +16,7 @@
 </svelte:head>
 
 <script>
-  import firebase from 'firebase/app'
-  import '@firebase/auth'
+  import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 
   import GLogo from './GoogleProvider/GLogo.svelte'
 
@@ -26,7 +25,7 @@
   }
 
   //PROPS
-  export let fah;     // Firebase "app" handle      // <-- Q: How to make this compulsory? #Svelte #help
+  export let fbAuth;     // Firebase "app"'s '.auth'      // <-- Q: How to make this compulsory? #Svelte #help
   export let light = false;    // Boolean
   ///PROPS
 
@@ -36,7 +35,7 @@
     //...
   }
 
-  assert(fah?.auth, "[INTERNAL] Missing 'fah' attribute, or not properly initialized.");
+  assert(fbAuth, "[INTERNAL] Missing 'fbAuth'");
 
   let el;   // <div> (from 'onMounted' onwards)
 
@@ -73,9 +72,7 @@
   })
   ***/
 
-  // Note: Here we use the 'firebase.auth' namespace (not the "app" instance).
-  //
-  const provider = new firebase.auth.GoogleAuthProvider();
+  const provider = new GoogleAuthProvider();
     //
     // Note: additional roles can be an added feature. Just need to pass them via attrs ('roles=...[ ...]') and
     //    document.
@@ -83,21 +80,19 @@
 
   function signIn() {
 
-    fah.auth()
-      .signInWithPopup(provider)
-      .then( res => {
-        // Don't need to do anything. A central Firebase auth change listener informs the app (or already has).
-        const { credential, user } = res;
-        const token = credential.accessToken;
+    signInWithPopup( fbAuth, provider ).then( res => {
+      // Don't need to do anything. A central Firebase auth change listener informs the app (or already has).
+      const cred = GoogleAuthProvider.credentialFromResult(res);
+      const { user } = res;
 
-        console.log("Signed in:", { token, user });
-      })
-      .catch( err => {
-        const { code, message, credential } = err;
-        console.error("Authentication failed:", { code, message, credential })
+      console.log("Signed in:", { cred, user });
+    })
+    .catch( err => {
+      const { code, message, credential } = err;
+      console.error("Authentication failed:", { code, message, credential })
 
-        alert(`Authentication failed:\n\n${message}`);
-      });
+      alert(`Authentication failed:\n\n${message}`);
+    });
   }
 </script>
 

@@ -9,9 +9,7 @@
 
 Allows signing in with [Firebase authentication](https://firebase.google.com/products/auth).
 
-<img src=".images/firebaseui-free.svg" width=70% style="margin: -30px 0 -40px" />
-
-A modern alternative to the traditional Firebase UI library - that's no longer needed. <font size="+3">🕺</font>
+A modern (ES modules, Firebase `@exp` API) alternative to the traditional Firebase UI library - that's no longer needed. <font size="+3">🕺</font>
 
 ## Features
 
@@ -19,6 +17,7 @@ A modern alternative to the traditional Firebase UI library - that's no longer n
 - For browsers with native ES module support
 - Modern, light and only concerned with web
 - Supports Firebase and Google Identity Platform
+- Versions released for both traditional (Firebase 8.x) API and the upcoming `@exp` API.
 
 <!-- 
 ## Playground
@@ -50,7 +49,7 @@ See Google or Firebase documentation on how to create such a project. See `demo/
 ## Using in your project
 
 ```
-$ npm install @akauppi/aside-keys
+$ npm install aside-keys@next
 ```
 
 >WARNING: THE NAME OF THE EXPORTED ARTEFACT WILL LIKELY CHANGE.
@@ -58,7 +57,7 @@ $ npm install @akauppi/aside-keys
 In your browser code:
 
 ```
-import { init } from "@akauppi/aside-keys"
+import { init } from "aside-keys"
 ```
 
 This needs some ES resolver (eg. Vite; see the module's [GitHub repo](http://github.com/akauppi/aside-keys) for a sample) to resolve the node packages to browser JavaScript modules.
@@ -75,7 +74,7 @@ The `aside-keys` web component handles the visual side of the authentication. It
 
 The HTML you place in the slot (between the `aside-keys` start and end tags) is completely up to you. You should somehow indicate what the panel is about.
 
-<!-- WIP
+<!-- disabled
 The `display:none` seems to be needed so that the slotted text contents does not flash at load.[^1]
 
 [^1]: Do contribute if you know a way that doesn't need such application side patching.
@@ -128,7 +127,8 @@ Initialization is done by calling:
 ```
 import { init } from '@akauppi/aside-keys'
 
-init( firebaseApp );
+const fbAuth = getAuth(...);	// Auth handle
+init( fbAuth );
 ```
 
 That's all you need to do.
@@ -143,8 +143,6 @@ Bonus! Are you interested in sample code to bind the user notifications to the f
 - [Vue.js 3](bonus/vue3.js)
 
 ## Inside look 🔬
-
-The visual aspect is completely separate from the code handling the sign in/out activities. If you sign in a user using other means than the component, the component should be fine with this. :)
 
 ### Visual & layout
 

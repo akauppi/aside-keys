@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@local/aside-keys": "file:packages/aside-keys",
-    "firebase": "^8.2.9"
+    "firebase": "^0.900.15"
   },
   "devDependencies": {
     "concurrently": "^6.0.0",

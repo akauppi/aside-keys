@@ -1,14 +1,15 @@
 /*
 * Sample code: represent the active user as a Vue.js 3 'ref'.
 */
-import firebase from 'firebase/app'
-import '@firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 
 import { ref } from 'vue'
 
 const userRef = ref();   // '.value' is 'undefined' until auth has been established
 
-const unsub = firebase.auth().onAuthStateChanged( (user) => {
+const auth = getAuth(fbApp);
+
+const unsub = onAuthStateChanged( auth, (user) => {
   userRef.value = user;
 });
 
