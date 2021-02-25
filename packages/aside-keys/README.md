@@ -150,8 +150,6 @@ Bonus! Are you interested in sample code to bind the user notifications to the f
 
 ## Inside look 🔬
 
-The visual aspect is completely separate from the code handling the sign in/out activities. If you sign in a user using other means than the component, the component should be fine with this. :)
-
 ### Visual & layout
 
 Top right is a typical location for sign-in information, around 2021. Many web services show one's active profile there, so we adopted this corner. It's currently not customizable.
