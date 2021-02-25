@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akauppi/aside-keys.git"
+    "url": "git+https://github.com/akauppi/aside-keys/tree/firebase-next"
   },
   "type": "module",
   "keywords": [

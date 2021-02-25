@@ -10,7 +10,7 @@ A collection of web components, for a modern (ES modules) web app.
 This is like the stuff that collects in the pockets - keys, screw drivers, what not.
 
 |Component|Used for|
-|---|---|---|
+|---|---|
 |[`aside-keys`](packages/aside-keys/README.md)|Authenticate with Firebase|
 
 
