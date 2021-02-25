@@ -5,7 +5,10 @@
 - for users; explains how to import and use the package
 -->
 
-![](.images/aside-keys.png)
+![](https://github.com/akauppi/aside-keys/raw/firebase-next/packages/aside-keys/.images/aside-keys.png)
+	<!-- Note: 'https://www.npmjs.com/package/aside-keys' needs an absolute path to the picture.
+	- ![](.images/aside-keys.png)
+	-->
 
 Allows signing in with [Firebase authentication](https://firebase.google.com/products/auth).
 
