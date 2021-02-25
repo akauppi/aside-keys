@@ -1,5 +1,9 @@
 # Changelog
 
+*NOTE: Place subpackage specific, versioned changes there. Root specific here (just dates).*
+
+---
+
 ## 20-Feb-2021 (0.0.0-alpha.7)
 
 - revise and API changes; leaving only `init`.

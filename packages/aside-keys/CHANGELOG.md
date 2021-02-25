@@ -1,5 +1,9 @@
 # Changelog
 
+## 25-Feb-2021 (0.0.2-alpha.3)
+
+- Made the Firebase 9.x API the `master`.
+
 ## 24-Feb-2021 (0.0.2-alpha.1)
 
 - Converted to Firebase 9.x API

@@ -1,11 +1,11 @@
 {
   "name": "aside-keys",
-  "version": "0.0.2-alpha.2",
-  "description": "Web component for Firebase social login",
+  "version": "0.0.2-alpha.3",
+  "description": "Web component for Firebase social login (using '@exp' Firebase API)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akauppi/aside-keys/tree/firebase-next"
+    "url": "git+https://github.com/akauppi/aside-keys/tree/master/packages/aside-keys"
   },
   "type": "module",
   "keywords": [
@@ -22,7 +22,7 @@
     ".": "./dist/bundle.js"
   },
   "publishConfig": {
-    "tag": "next"
+    "tag": "alpha"
   },
   "scripts": {
     "build": "rollup -c",
