@@ -5,11 +5,17 @@
 - for users; explains how to import and use the package
 -->
 
+<!-- Note: Image links as absolute public links so 'npmjs.org' sees them.
+-->
+
+![](https://github.com/akauppi/aside-keys/raw/master/packages/aside-keys/.images/aside-keys.png)
+<!--
 ![](.images/aside-keys.png)
+-->
 
 Allows signing in with [Firebase authentication](https://firebase.google.com/products/auth).
 
-<img src=".images/firebaseui-free.svg" width=70% style="margin: -30px 0 -40px" />
+<img src="https://github.com/akauppi/aside-keys/raw/master/packages/aside-keys/.images/firebaseui-free.svg" width=70% style="margin: -30px 0 -40px" />
 
 A modern alternative to the traditional Firebase UI library - that's no longer needed. <font size="+3">🕺</font>
 
@@ -50,7 +56,7 @@ See Google or Firebase documentation on how to create such a project. See `demo/
 ## Using in your project
 
 ```
-$ npm install @akauppi/aside-keys
+$ npm install aside-keys
 ```
 
 >WARNING: THE NAME OF THE EXPORTED ARTEFACT WILL LIKELY CHANGE.
@@ -58,7 +64,7 @@ $ npm install @akauppi/aside-keys
 In your browser code:
 
 ```
-import { init } from "@akauppi/aside-keys"
+import { init } from "aside-keys"
 ```
 
 This needs some ES resolver (eg. Vite; see the module's [GitHub repo](http://github.com/akauppi/aside-keys) for a sample) to resolve the node packages to browser JavaScript modules.
@@ -126,7 +132,7 @@ The `aside-keys` component works as a singleton - it makes sense to have only on
 Initialization is done by calling:
 
 ```
-import { init } from '@akauppi/aside-keys'
+import { init } from 'aside-keys'
 
 init( firebaseApp );
 ```

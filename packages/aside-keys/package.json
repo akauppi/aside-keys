@@ -1,6 +1,6 @@
 {
   "name": "aside-keys",
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "description": "Web component for Firebase social login",
   "license": "MIT",
   "repository": {
@@ -15,7 +15,8 @@
   "files": [
     "dist/**",
     "src/**/*.js",
-    "src/**/*.svelte"
+    "src/**/*.svelte",
+    ".images/**"
   ],
   "exports": {
     ".": "./dist/bundle.js"
