@@ -1,5 +1,7 @@
 # aside-keys
 
+><font color=red>NOTE: This is the Firebase 8.x API version. Active development has moved to the `@exp` modular Firebase API version.</font>
+
 <!-- packages/aside/README.md
 - visible in npm registry
 - for users; explains how to import and use the package

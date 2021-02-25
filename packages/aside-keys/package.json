@@ -1,11 +1,11 @@
 {
   "name": "aside-keys",
   "version": "0.0.1-alpha.3",
-  "description": "Web component for Firebase social login",
+  "description": "Web component for Firebase social login (Firebase 8.x API version)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akauppi/aside-keys.git"
+    "url": "git+https://github.com/akauppi/aside-keys/tree/firebase-8.x/packages/aside-keys"
   },
   "type": "module",
   "keywords": [
