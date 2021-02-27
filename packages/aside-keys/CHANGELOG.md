@@ -3,6 +3,7 @@
 ## 25-Feb-2021 (0.0.2-alpha.3)
 
 - Made the Firebase 9.x API the `master`.
+- Removed source files from packaging (Svelte apps would also use the web component).
 
 ## 24-Feb-2021 (0.0.2-alpha.1)
 

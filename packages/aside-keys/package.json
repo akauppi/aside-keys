@@ -14,9 +14,7 @@
   ],
   "files": [
     "dist/**",
-    ".images/aside-keys.png",
-    "src/**/*.js",
-    "src/**/*.svelte"
+    ".images/aside-keys.png"
   ],
   "exports": {
     ".": "./dist/bundle.js"
