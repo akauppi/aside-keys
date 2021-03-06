@@ -88,14 +88,6 @@ $ npm run dev
 Open a browser at [localhost:5000](http://localhost:5000). 
 
 
-<!-- tbd. make this 'deploy/README.md'
-## Packaging
-
-```
-$ npm run build
-```
--->
-
 ## References
 
 - [Svelte Web Component - 5.4kB](https://medium.com/@gogakoreli/svelte-web-component-5-4kb-4afe46590d99) (blog, Apr 2020)

@@ -9,19 +9,19 @@
 
 	<script type="module">
 		import { initializeApp } from 'firebase/app'
-		import { getAuth } from 'firebase/auth'
+		import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'
 
 		import { init } from '@local/aside-keys'
 
 		const [apiKey, authDomain] = [import.meta.env.VITE_API_KEY, import.meta.env.VITE_AUTH_DOMAIN];
 
 		const fah = initializeApp({ apiKey, authDomain });
-		const fbAuth = getAuth(fah);
-		init( fbAuth );
+		const auth = getAuth(fah);
+		init( auth );
 
 		const elSignout = document.getElementById("signOut");
 
-		fbAuth.onAuthStateChanged( user => {
+		onAuthStateChanged( auth, user => {
 			elSignout.style.display = user ? 'block':'none';		// show sign out button only when there is a user
 
 			if (!user) {
@@ -32,7 +32,7 @@
 		});
 
 		window.signOut = () => {
-			fbAuth.signOut().catch( err => {
+			signOut(auth).catch( err => {
 				console.error("Sign out failed:", err);
 			});
 		}

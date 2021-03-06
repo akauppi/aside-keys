@@ -52,10 +52,8 @@ See Google or Firebase documentation on how to create such a project. See `demo/
 ## Using in your project
 
 ```
-$ npm install aside-keys@next
+$ npm install aside-keys
 ```
-
->WARNING: THE NAME OF THE EXPORTED ARTEFACT WILL LIKELY CHANGE.
 
 In your browser code:
 
@@ -128,7 +126,7 @@ The `aside-keys` component works as a singleton - it makes sense to have only on
 Initialization is done by calling:
 
 ```
-import { init } from '@akauppi/aside-keys'
+import { init } from 'aside-keys'
 
 const fbAuth = getAuth(...);	// Auth handle
 init( fbAuth );
@@ -145,7 +143,8 @@ Bonus! Are you interested in sample code to bind the user notifications to the f
 - [Svelte 3](bonus/svelte3.js)
 - [Vue.js 3](bonus/vue3.js)
 
-## Inside look 🔬
+
+## Notes...
 
 ### Visual & layout
 
