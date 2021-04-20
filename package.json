@@ -23,11 +23,11 @@
     "_checkEnvLocal": "[[ -f .env.local ]] || ( >&2 echo \"ERROR: '.env.local' is missing\n\"; exit 4)"
   },
   "dependencies": {
-    "@local/aside-keys": "file:package",
-    "firebase": "^9.0.0-beta.1"
+    "@local/aside-keys": "file:./package"
   },
   "devDependencies": {
     "concurrently": "^6.0.2",
+    "firebase": "^9.0.0-beta.1",
     "vite": "^2.2.1"
   },
   "//": {

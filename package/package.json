@@ -29,8 +29,7 @@
     "prepare": "npm run build",
     "//clean": "rm -f dist/*"
   },
-  "peerDependencies": {
-    "@firebase/app": "^0.0.900",
+  "//peerDependencies": {
     "@firebase/auth": "^0.0.900"
   },
   "devDependencies": {
