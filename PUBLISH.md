@@ -7,9 +7,10 @@
 
 ## Steps
 
-Check that `CHANGELOG.md` contains mention of what the release contains.
+Check that `package/CHANGELOG.md` contains mention of what the release contains.
 
 ```
+$ cd package
 $ npm publish --tag alpha [--dry-run]
 ...
 Enter OTP: ...

@@ -1,18 +1,18 @@
 # aside-keys
 
-<!-- packages/aside/README.md
+<!-- package/README.md
 - visible in npm registry
 - for users; explains how to import and use the package
 -->
 
-![](https://github.com/akauppi/aside-keys/raw/firebase-next/packages/aside-keys/.images/aside-keys.png)
+![](https://github.com/akauppi/aside-keys/blob/master/package/.images/aside-keys.png?raw=true)
 	<!-- Note: 'https://www.npmjs.com/package/aside-keys' needs an absolute path to the picture.
 	- ![](.images/aside-keys.png)
 	-->
 
 Allows signing in with [Firebase authentication](https://firebase.google.com/products/auth).
 
-A modern (ES modules, Firebase `@exp` API) alternative to the traditional Firebase UI library - that's no longer needed. <font size="+3">🕺</font>
+A modern (ES modules, Firebase 9.x JS SDK) alternative to the traditional Firebase UI library - that's no longer needed. <font size="+3">🕺</font>
 
 ## Features
 
@@ -20,7 +20,10 @@ A modern (ES modules, Firebase `@exp` API) alternative to the traditional Fireba
 - For browsers with native ES module support
 - Modern, light and only concerned with web
 - Supports Firebase and Google Identity Platform
-- Versions released for both traditional (Firebase 8.x) API and the upcoming `@exp` API.
+
+### Roadmap
+
+- [ ] allow the persistence (none / session / browser storage) be steered by the props (or initialization parameters)
 
 <!-- 
 ## Playground

@@ -1,5 +1,13 @@
 # Changelog
 
+## 20-Apr-2021 (0.0.2-alpha.5)
+
+- Peer dependency only to Firebase subpackages actually used.
+
+## 14-Apr-2021 (0.0.2-alpha.4)
+
+- Upgraded to `firebase@9.0.0-beta.1`
+
 ## 25-Feb-2021 (0.0.2-alpha.3)
 
 - Made the Firebase 9.x API the `master`.

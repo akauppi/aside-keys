@@ -35,7 +35,7 @@ module.exports = {
   // All variations are specified under 'overrides'
   overrides: [
     { // web component sources
-      files: ["packages/**/*.js"],
+      files: ["package/**/*.js"],
       env: {
         browser: true,
         es6: true

@@ -1,7 +1,7 @@
 /*
 * Sample code: represent the active user as a Svelte 3 'Readable'.
 */
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from '@firebase/auth'
 
 import {readable} from 'svelte/store'
 

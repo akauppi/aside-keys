@@ -12,23 +12,23 @@
     "node": ">= 13.2"
   },
   "scripts": {
-    "build": "for DIR in packages/*; do (cd $DIR && npm run build); done",
+    "build": "npm --prefix package run build",
     "dev": "concurrently -k -n aside-keys,vite \"npm run --silent _watch1\" \"vite --port 5000\"",
-    "_watch1": "(cd packages/aside-keys && npm run watch)",
+    "_watch1": "npm --prefix package run watch",
     "-- ": "",
     "predev": "PORT=5000 npm run --silent _checkPortIsFree && npm run --silent _checkEnvLocal",
-    "preinstall": "for DIR in packages/*; do (cd $DIR && npm install && npm run build); done",
+    "preinstall": "npm --prefix package install && npm --prefix package run build",
     "-- -": "",
     "_checkPortIsFree": "tools/port-is-free.sh $PORT || ( >&2 echo \"ERROR: Port '$PORT' is taken!\n\"; exit 2)",
     "_checkEnvLocal": "[[ -f .env.local ]] || ( >&2 echo \"ERROR: '.env.local' is missing\n\"; exit 4)"
   },
   "dependencies": {
-    "@local/aside-keys": "file:packages/aside-keys",
-    "firebase": "^0.900.15"
+    "@local/aside-keys": "file:package",
+    "firebase": "^9.0.0-beta.1"
   },
   "devDependencies": {
-    "concurrently": "^6.0.0",
-    "vite": "^2.0.3"
+    "concurrently": "^6.0.2",
+    "vite": "^2.2.1"
   },
   "//": {
     "scripts": {

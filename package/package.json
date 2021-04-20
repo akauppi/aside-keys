@@ -1,11 +1,11 @@
 {
   "name": "aside-keys",
-  "version": "0.0.2-alpha.3",
-  "description": "Web component for Firebase social login (using '@exp' Firebase API)",
+  "version": "0.0.2-alpha.5",
+  "description": "Web component for Firebase social login (using Firebase JS SDK 9.x)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akauppi/aside-keys/tree/master/packages/aside-keys"
+    "url": "git+https://github.com/akauppi/aside-keys/tree/master/package"
   },
   "type": "module",
   "keywords": [
@@ -30,12 +30,12 @@
     "//clean": "rm -f dist/*"
   },
   "peerDependencies": {
-    "firebase": "^0.900.15"
+    "@firebase/app": "^0.0.900",
+    "@firebase/auth": "^0.0.900"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^11.2.0",
-    "firebase": "^0.900.15",
-    "rollup": "^2.39.1",
+    "@rollup/plugin-node-resolve": "^11.2.1",
+    "rollup": "^2.45.2",
     "rollup-plugin-bundle-size": "^1.0.3",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-svelte": "^7.1.0",

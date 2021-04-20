@@ -1,25 +1,8 @@
-# Keys and Gears ⚙️ 🔩 🗝
+# Aside-keys
 
 <!-- Root README: 
 - visible in GitHub
 - for developers; explains how to build and test the project
--->
-
-A collection of web components, for a modern (ES modules) web app.
-
-This is like the stuff that collects in the pockets - keys, screw drivers, what not.
-
-|Component|Used for|
-|---|---|
-|[`aside-keys`](packages/aside-keys/README.md)|Authenticate with Firebase|
-
-
-<!-- 
-## Playground
-
-tbd. place testing link in the GitHub description, once deployed
-
-..or maybe make a 'playground' link, above?
 -->
 
 ## Scope <font size="+2">🔍</font>
@@ -32,9 +15,7 @@ tbd. place testing link in the GitHub description, once deployed
 
 ## Approach
 
-Keep the code **simple**.
-
-[More](APPROACH.md)
+Keep the code **simple**. [More..](APPROACH.md)
 
 
 ## Requirements
@@ -71,7 +52,7 @@ Developed on:
 
 macOS 11.2
 node 15.x
-npm 7.x
+npm 7.9
 -->
 
 

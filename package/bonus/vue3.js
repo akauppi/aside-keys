@@ -1,7 +1,7 @@
 /*
 * Sample code: represent the active user as a Vue.js 3 'ref'.
 */
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from '@firebase/auth'
 
 import { ref } from 'vue'
 

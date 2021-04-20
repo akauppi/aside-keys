@@ -1,8 +1,10 @@
 # Changelog
 
-*NOTE: Place subpackage specific, versioned changes there. Root specific here (just dates).*
+*NOTE: Place feature specific changes in `package/README`. Build specific ones (not published) here (just dates).*
 
----
+## 20-Apr-2021 (0.0.2-beta.5)
+
+- Flattened the directory layout to just `package`
 
 ## 20-Feb-2021 (0.0.0-alpha.7)
 
