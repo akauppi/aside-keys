@@ -1,5 +1,7 @@
 # aside-keys
 
+[![install size](https://packagephobia.com/badge?p=aside-keys)](https://packagephobia.com/result?p=aside-keys)
+
 <!-- package/README.md
 - visible in npm registry
 - for users; explains how to import and use the package

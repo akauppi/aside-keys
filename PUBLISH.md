@@ -7,11 +7,18 @@
 
 ## Steps
 
+### Build first!
+
+```
+$ npm run build
+```
+
+### Publish
+
 Check that `package/CHANGELOG.md` contains mention of what the release contains.
 
 ```
-$ cd package
-$ npm publish --tag alpha [--dry-run]
+$ (cd package && npm publish --tag alpha [--dry-run])
 ...
 Enter OTP: ...
 + aside-keys@0.0.1-alpha.1

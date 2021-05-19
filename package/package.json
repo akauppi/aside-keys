@@ -1,11 +1,12 @@
 {
   "name": "aside-keys",
-  "version": "0.0.2-alpha.5",
+  "version": "0.0.2-alpha.6",
   "description": "Web component for Firebase social login (using Firebase JS SDK 9.x)",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/akauppi/aside-keys/tree/master/package"
+    "url": "https://github.com/akauppi/aside-keys.git",
+    "directory": "package"
   },
   "type": "module",
   "keywords": [
@@ -28,9 +29,6 @@
     "--": "",
     "prepare": "npm run build",
     "//clean": "rm -f dist/*"
-  },
-  "//peerDependencies": {
-    "@firebase/auth": "^0.0.900"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^11.2.1",
