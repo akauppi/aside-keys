@@ -1,5 +1,8 @@
 // vite.config.js
 
-export default {
-  root: 'demo'
-}
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  root: 'demo',
+  envDir: '../'   // actual repo root
+})

@@ -2,6 +2,13 @@
 
 *NOTE: Place feature specific changes in `package/README`. Build specific ones (not published) here (just dates).*
 
+## 30-Apr-2022 (0.0.3-alpha.1)
+
+- Changed peer dependency requirement from `firebase` to `@firebase/auth`
+- Updated dependencies
+- Slight changes to keep things going (nothing affecting users)
+
+
 ## 20-Apr-2021 (0.0.2-beta.5)
 
 - Flattened the directory layout to just `package`

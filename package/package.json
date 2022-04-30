@@ -1,7 +1,7 @@
 {
   "name": "aside-keys",
-  "version": "0.0.2-alpha.6",
-  "description": "Web component for Firebase social login (using Firebase JS SDK 9.x)",
+  "version": "0.0.3-alpha.1",
+  "description": "Web component for social login (using Firebase JS SDK 9.x)",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -30,14 +30,17 @@
     "prepare": "npm run build",
     "//clean": "rm -f dist/*"
   },
+  "peerDependencies": {
+    "@firebase/auth": "^0.19.12"
+  },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^11.2.1",
-    "rollup": "^2.45.2",
+    "@rollup/plugin-node-resolve": "^13.2.1",
+    "rollup": "^2.71.1",
     "rollup-plugin-bundle-size": "^1.0.3",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-terser": "^7.0.2",
-    "svelte": "^3.32.3"
+    "svelte": "^3.48.0"
   },
   "//": {
     "scripts.clean": [

@@ -10,12 +10,23 @@
 ||||
 |---|---|---|
 |Evergreen browsers|<font color=green>&check; IN</font>|IE11 out|
-|Firebase|<font color=green>&check; IN</font>|server out|
+|Serverless (= Firebase)|<font color=green>&check; IN</font>|server out|
 |Social login|<font color=green>&check; IN</font>|handling passwords out|
 
-## Approach
+The repo provides a web component for social sign-in providers. The intention is to be open to multiple providers, and deal with them *dynamically* - so that the dependency footprint is zero. One's application provides the necessary dependencies for the component.
 
-Keep the code **simple**. [More..](APPROACH.md)
+Having multiple sign-in providers is the aim.
+
+||stability|comments|
+|---|---|---|
+|Google auth (IdP)|stable|via `@firebase/auth`|
+
+<!--
+Interesting providers (to the author):
+
+- Azure
+- Okta
+-->
 
 
 ## Requirements
@@ -50,8 +61,8 @@ It also seems that whether you create the values via Firebase or Google Identity
 <!--
 Developed on:
 
-macOS 11.2
-node 15.x
+macOS 12.3
+node 17.9
 npm 7.9
 -->
 

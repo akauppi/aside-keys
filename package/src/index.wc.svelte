@@ -11,7 +11,7 @@
 
   import {slideFixed} from './tools/slideFixed'
 
-  import GoogleProvider from "./GoogleProvider.svelte";
+  import GoogleProvider from "./GoogleProvider/index.svelte"
 </script>
 
 <!--
@@ -24,7 +24,7 @@
 -   - modules imported here are also visible in the instance code (normal 'script').
 -->
 <script context="module">
-  import { onAuthStateChanged } from 'firebase/auth'
+  import { onAuthStateChanged } from '@firebase/auth'
   import {writable} from 'svelte/store'
 
   // Our things show to the instances, but not the other way round.

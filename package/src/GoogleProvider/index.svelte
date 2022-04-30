@@ -1,5 +1,5 @@
 <!--
-- src/GoogleProvider.svelte
+- src/GoogleProvider/index.svelte
 -
 - Button and code for logging in via Google
 -
@@ -16,9 +16,9 @@
 </svelte:head>
 
 <script>
-  import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+  import { GoogleAuthProvider, signInWithPopup } from '@firebase/auth'
 
-  import GLogo from './GoogleProvider/GLogo.svelte'
+  import GLogo from './GLogo.svelte'
 
   function assert(cond,msg) {
     if (!cond) throw new Error(msg);
@@ -154,9 +154,9 @@
     border: 1px solid rgba(255, 255, 255, 0.6);   /* (could do many things, but CSS not picked up) */
   }
 
-  .pressed {
+  /*.pressed {
     box-shadow: none;
     transform: translate(2px,2px);
-  }
+  }*/
 </style>
 

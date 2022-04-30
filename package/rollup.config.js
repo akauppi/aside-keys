@@ -22,10 +22,8 @@ function isPassableCssWarning({ code, message }) {
   );
 }
 
-// Create separate bundles for each component.
-//
 export default {
-  input: 'src/index.svelte',
+  input: 'src/index.wc.svelte',
   output: {
     sourcemap: true,
     format: 'es',
@@ -47,8 +45,8 @@ export default {
   plugins: [
     // Two rounds of Svelte - see -> https://github.com/sveltejs/svelte/issues/4228#issuecomment-626315086
     //
-    svelte({		// compile as web component ('index.svelte' or 'my-component.svelte')
-      include: /\/[a-z][^/]+\.svelte$/,
+    svelte({		// compile as web component ('...-component.wc.svelte')
+      include: /.+\.wc\.svelte$/,
       compilerOptions: {
         dev: !build,
         customElement: true,
@@ -58,8 +56,8 @@ export default {
         handler(warning);
       }
     }),
-    svelte({		// Svelte (sub)components (Big.svelte)
-      include: /\/[A-Z][^/]+\.svelte$/,
+    svelte({		// Svelte (sub)components ('MyComponent.svelte' or 'MyComponent/index.svelte')
+      include: /\/[A-Z][^/]+(?:\/index)?\.svelte$/,
       compilerOptions: {
         dev: !build,
         customElement: false,
