@@ -18,8 +18,8 @@
     "_checkEnvLocal": "[ -f .env.local ] || ( >&2 echo \"ERROR: '.env.local' is missing\n\"; false)"
   },
   "dependencies": {
-    "@local/aside-keys": "file:./package",
-    "@firebase/auth": "^0.19.12"
+    "@firebase/auth": "^0.20.8",
+    "@local/aside-keys": "file:./package"
   },
   "devDependencies": {
     "concurrently": "^7.1.0",

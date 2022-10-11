@@ -1,6 +1,6 @@
 {
   "name": "aside-keys",
-  "version": "0.0.3-alpha.1",
+  "version": "0.0.3-alpha.2",
   "description": "Web component for social login (using Firebase JS SDK 9.x)",
   "license": "MIT",
   "repository": {
@@ -31,7 +31,7 @@
     "//clean": "rm -f dist/*"
   },
   "peerDependencies": {
-    "@firebase/auth": "^0.19.12"
+    "@firebase/auth": "^0.20.8"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.2.1",
